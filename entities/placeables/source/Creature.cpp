@@ -48,6 +48,7 @@ void Creature::be_loaded(json data) {
     this->primary.endurance = primary_data["endurance"].get<int>();
     this->primary.health_limit = primary_data["health_limit"].get<int>();
     this->primary.health = primary_data["health"].get<int>();
+    this->exp = data["exp"].get<int>();
     this->compute_secondary();
 }
 
@@ -58,7 +59,12 @@ json Creature::be_saved() const {
     save_object["primary"]["endurance"] = this->primary.endurance;
     save_object["primary"]["health_limit"] = this->primary.health_limit;
     save_object["primary"]["health"] = this->primary.health;
+    save_object["exp"] = this->exp;
     return save_object;
+}
+
+int Creature::get_exp() const {
+    return this->exp;
 }
 
 

@@ -13,69 +13,104 @@ void PlayerInfoView::set_position(std::pair<float, float> new_position) {
 }
 
 void PlayerInfoView::draw(std::shared_ptr<sf::RenderWindow> &window, Player &player) {
+    int big_space_value = 50;
+    int space_value = 20;
+    int font_size = 15;
+
+
     sf::Text health(
             std::string("HP:\t") + std::to_string(player.get_primary().health)
             + std::string("/") + std::to_string(player.get_primary().health_limit),
             this->font,
-            15);
+            font_size);
+
+    sf::Text exp(
+            std::string("EXP:\t") + std::to_string(player.get_exp())
+            + std::string("/") + std::to_string(player.get_max_exp()),
+            this->font,
+            font_size);
+
+    sf::Text level(
+            std::string("LVL:\t") + std::to_string(player.get_level()),
+            this->font,
+            font_size);
+
+    sf::Text upgrade_points(
+            std::string("UPP:\t") + std::to_string(player.get_upgrade_points()),
+            this->font,
+            font_size);
+
 
     sf::Text power(
             std::string("POW:\t") + std::to_string(player.get_primary().power),
             this->font,
-            15);
+            font_size);
 
     sf::Text ability(
             std::string("ABL:  \t") + std::to_string(player.get_primary().ability),
             this->font,
-            15);
+            font_size);
 
     sf::Text endurance(
             std::string("END: \t") + std::to_string(player.get_primary().endurance),
             this->font,
-            15);
+            font_size);
 
     sf::Text bonus_damage(
             std::string("BDMG: \t") + std::to_string(player.get_secondary().bonus_damage),
             this->font,
-            15);
+            font_size);
 
     sf::Text bonus_defence(
             std::string("BDFN: \t") + std::to_string(player.get_secondary().bonus_defence),
             this->font,
-            15);
+            font_size);
 
     sf::Text unlocking(
             std::string("UNLC: \t") + std::to_string(player.get_secondary().unlocking),
             this->font,
-            15);
+            font_size);
 
     sf::Text consumable_limit(
             std::string("CLMT: \t") + std::to_string(player.get_secondary().consumable_limit),
             this->font,
-            15);
+            font_size);
 
-    health.setPosition(this->position.first + 10, this->position.second + 10);
+    health.setPosition(this->position.first + space_value, this->position.second + space_value);
     window->draw(health);
 
-    power.setPosition(this->position.first + 10, this->position.second + 60);
+    exp.setPosition(this->position.first + space_value, this->position.second + 2 * space_value);
+    window->draw(exp);
+
+    level.setPosition(this->position.first + space_value, this->position.second + 3 * space_value);
+    window->draw(level);
+
+    upgrade_points.setPosition(this->position.first + space_value, this->position.second + 4 * space_value);
+    window->draw(upgrade_points);
+
+    power.setPosition(this->position.first + space_value, this->position.second + 4 * space_value + big_space_value);
     window->draw(power);
 
-    ability.setPosition(this->position.first + 10, this->position.second + 80);
+    ability.setPosition(this->position.first + space_value, this->position.second + 5 * space_value + big_space_value);
     window->draw(ability);
 
-    endurance.setPosition(this->position.first + 10, this->position.second + 100);
+    endurance.setPosition(this->position.first + space_value, this->position.second + 6 * space_value + big_space_value);
     window->draw(endurance);
 
-    bonus_damage.setPosition(this->position.first + 10, this->position.second + 150);
+    bonus_damage.setPosition(this->position.first + space_value,
+                             this->position.second + 6 * space_value + 2 * big_space_value);
     window->draw(bonus_damage);
 
-    bonus_defence.setPosition(this->position.first + 10, this->position.second + 170);
+    bonus_defence.setPosition(this->position.first + space_value,
+                              this->position.second + 7 * space_value + 2 * big_space_value);
     window->draw(bonus_defence);
 
-    unlocking.setPosition(this->position.first + 10, this->position.second + 190);
+    unlocking.setPosition(this->position.first + space_value,
+                          this->position.second + 8 * space_value + 2 * big_space_value);
     window->draw(unlocking);
 
-    consumable_limit.setPosition(this->position.first + 10, this->position.second + 210);
+    consumable_limit.setPosition(this->position.first + space_value,
+                                 this->position.second + 9 * space_value + 2 * big_space_value);
     window->draw(consumable_limit);
 }
 

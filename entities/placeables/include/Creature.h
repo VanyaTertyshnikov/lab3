@@ -31,6 +31,8 @@ protected:
     Primary influence;
     Secondary secondary;
 
+    int exp;
+
     void compute_secondary();
 
 
@@ -44,6 +46,8 @@ public:
     [[nodiscard]] Primary get_influence() const;
 
     [[nodiscard]] Secondary get_secondary() const;
+
+    int get_exp() const;
 
     void be_loaded(json data) override;
 
