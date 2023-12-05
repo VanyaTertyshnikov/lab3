@@ -11,6 +11,7 @@
 class Player : public Moveable, public Creature{
 private:
     int max_exp = 0, level = 0, upgrade_points = 0;
+    void reduce_upgrade_points();
 
 public:
     Player() = default;

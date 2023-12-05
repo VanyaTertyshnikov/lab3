@@ -39,6 +39,7 @@ void Player::inc_exp(int inc_value) {
 void Player::upgrade_primary(Primary upgrade_value) {
     this->primary = this->primary + upgrade_value;
     this->compute_secondary();
+    this->reduce_upgrade_points();
 }
 
 int Player::get_max_exp() const {
@@ -51,4 +52,8 @@ int Player::get_level() const {
 
 int Player::get_upgrade_points() const {
     return this->upgrade_points;
+}
+
+void Player::reduce_upgrade_points() {
+    this->upgrade_points--;
 }

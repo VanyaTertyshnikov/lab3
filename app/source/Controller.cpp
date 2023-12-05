@@ -25,6 +25,15 @@ void Controller::process_input(const std::shared_ptr<sf::RenderWindow>& window) 
             if(event.key.scancode == sf::Keyboard::Scan::D) {
                 this->service_->take_ground({1, 0});
             }
+            if(event.key.scancode == sf::Keyboard::Scan::Num1) {
+                this->service_->upgrade_parameter(1);
+            }
+            if(event.key.scancode == sf::Keyboard::Scan::Num2) {
+                this->service_->upgrade_parameter(2);
+            }
+            if(event.key.scancode == sf::Keyboard::Scan::Num3) {
+                this->service_->upgrade_parameter(3);
+            }
         }
     }
 }

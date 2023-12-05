@@ -42,6 +42,7 @@ public:
     ~Creature() override = default;
 
     [[nodiscard]] Primary get_primary() const;
+    void set_primary(Primary new_primary);
 
     [[nodiscard]] Primary get_influence() const;
 

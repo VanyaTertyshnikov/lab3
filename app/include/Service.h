@@ -19,6 +19,7 @@ public:
     explicit Service(const std::shared_ptr<State>& state);
     void take_ground(std::pair<int, int> direction);
     void move_player(std::pair<int, int> direction);
+    void upgrade_parameter(int num_of_parameter);
 };
 
 #endif //LAB3_SERVICE_H

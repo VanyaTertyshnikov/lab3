@@ -21,3 +21,17 @@ void Service::take_ground(std::pair<int, int> direction) {
     }
 }
 
+void Service::upgrade_parameter(int num_of_parameter) {
+    if(this->state->get_player().get_upgrade_points()  < 1)
+        return;
+    Primary upgrade_struct;
+    if(num_of_parameter == 1) { // upgrade power
+        upgrade_struct.power = 1;
+    } else if(num_of_parameter == 2) { // upgrade ability
+        upgrade_struct.ability = 1;
+    } else if(num_of_parameter == 3) { // upgrade endurance
+        upgrade_struct.endurance = 1;
+    }
+    this->state->get_player().upgrade_primary(upgrade_struct);
+}
+

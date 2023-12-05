@@ -67,4 +67,8 @@ int Creature::get_exp() const {
     return this->exp;
 }
 
+void Creature::set_primary(Primary new_primary) {
+    this->primary = new_primary;
+}
+
 
