@@ -18,6 +18,10 @@ public:
 
     std::vector<std::vector<Cell>>& get_cells();
 
+    unsigned get_width() const { return this->width; }
+
+    unsigned get_height() const { return this->height; }
+
     bool get_wall(std::pair<int, int> coords);
     void be_loaded(const std::string& file_path);
 

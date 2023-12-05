@@ -14,15 +14,14 @@ void App::run() {
     view_state->load_player_view("images/player.png");
     view_state->set_state(state);
     view_state->load_map_view("images/map.png");
-    view_state->load_player_view("fonts/OpenSans-Italic.ttf");
+    view_state->load_player_info_view("fonts/open_sans/OpenSans-Semibold.ttf");
 
     std::shared_ptr<Service> service = std::make_shared<Service>(state);
 
     this->controller = std::make_shared<Controller>(service, view_state);
 
-    while(this->window->isOpen()) {
+    while (this->window->isOpen()) {
         this->controller->process_input(this->window);
         this->controller->trigger_redraw(this->window);
     }
 }
-

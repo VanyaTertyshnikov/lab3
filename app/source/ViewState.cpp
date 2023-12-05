@@ -24,8 +24,8 @@ void ViewState::redraw(std::shared_ptr<sf::RenderWindow>& window) {
 
     this->player_view.draw(window, this->state_->get_player());
 
-    //std::pair<float, float> pos{this->state_.};
-    //this->player_info_view.set_position()
+    std::pair<float, float> pos{this->state_->get_map().get_width() * 32, 0};
+    this->player_info_view.set_position(pos);
     this->player_info_view.draw(window, this->state_->get_player());
 
     window->display();
