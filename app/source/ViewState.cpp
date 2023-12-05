@@ -24,9 +24,17 @@ void ViewState::redraw(std::shared_ptr<sf::RenderWindow>& window) {
 
     this->player_view.draw(window, this->state_->get_player());
 
+    //std::pair<float, float> pos{this->state_.};
+    //this->player_info_view.set_position()
+    this->player_info_view.draw(window, this->state_->get_player());
+
     window->display();
 }
 
 void ViewState::load_map_view(const std::string &file_path) {
     this->map_view.be_loaded(file_path);
+}
+
+void ViewState::load_player_info_view(const std::string &file_path) {
+    this->player_info_view.be_loaded(file_path);
 }

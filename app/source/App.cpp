@@ -14,7 +14,7 @@ void App::run() {
     view_state->load_player_view("images/player.png");
     view_state->set_state(state);
     view_state->load_map_view("images/map.png");
-
+    view_state->load_player_view("fonts/OpenSans-Italic.ttf");
 
     std::shared_ptr<Service> service = std::make_shared<Service>(state);
 
