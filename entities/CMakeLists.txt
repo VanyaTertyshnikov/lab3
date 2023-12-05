@@ -1,0 +1,2 @@
+add_subdirectory(placeables)
+add_subdirectory(map)
