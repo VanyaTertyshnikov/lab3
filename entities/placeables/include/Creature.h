@@ -16,6 +16,11 @@ struct Primary {
 
     Primary operator+(const Primary& other) const;
     Primary operator-(const Primary& other) const;
+
+    bool operator==(const Primary &other) const;
+
+    void be_loaded(json data);
+    [[nodiscard]] json be_saved() const;
 };
 
 struct Secondary {
@@ -31,7 +36,7 @@ protected:
     Primary influence;
     Secondary secondary;
 
-    int exp;
+    int exp{};
 
     void compute_secondary();
 

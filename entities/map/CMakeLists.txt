@@ -6,4 +6,4 @@ file(GLOB
 )
 add_library(map STATIC ${Sources} ${Includes})
 target_include_directories(map PUBLIC include)
-target_link_libraries(map PUBLIC placeables)
+target_link_libraries(map PUBLIC placeables objects)

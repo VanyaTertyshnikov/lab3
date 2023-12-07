@@ -26,6 +26,34 @@ Primary Primary::operator-(const Primary &other) const {
     return result;
 }
 
+bool Primary::operator==(const Primary &other) const {
+    bool same_power = this->power == other.power;
+    bool same_ability = this->ability == other.ability;
+    bool same_endurance = this->endurance == other.endurance;
+    bool same_health = this->health == other.health;
+    bool same_health_limit = this->health_limit == other.health_limit;
+
+    return same_power && same_ability && same_endurance && same_health && same_health_limit;
+}
+
+void Primary::be_loaded(json data) {
+    this->power = data["power"].get<int>();
+    this->ability = data["ability"].get<int>();
+    this->endurance = data["endurance"].get<int>();
+    this->health = data["health"].get<int>();
+    this->health_limit = data["health_limit"].get<int>();
+}
+
+json Primary::be_saved() const {
+    json save_object;
+    save_object["power"] = this->power;
+    save_object["ability"] = this->ability;
+    save_object["endurance"] = this->endurance;
+    save_object["health_limit"] = this->health_limit;
+    save_object["health"] = this->health;
+    return save_object;
+}
+
 Primary Creature::get_primary() const { return this->primary; }
 
 Primary Creature::get_influence() const { return this->influence; }
@@ -43,22 +71,14 @@ void Creature::compute_secondary() {
 void Creature::be_loaded(json data) {
     Placeable::be_loaded(data);
     const auto& primary_data = data["primary"];
-    this->primary.power = primary_data["power"].get<int>();
-    this->primary.ability = primary_data["ability"].get<int>();
-    this->primary.endurance = primary_data["endurance"].get<int>();
-    this->primary.health_limit = primary_data["health_limit"].get<int>();
-    this->primary.health = primary_data["health"].get<int>();
+    this->primary.be_loaded(primary_data);
     this->exp = data["exp"].get<int>();
     this->compute_secondary();
 }
 
 json Creature::be_saved() const {
     json save_object = Placeable::be_saved();
-    save_object["primary"]["power"] = this->primary.power;
-    save_object["primary"]["ability"] = this->primary.ability;
-    save_object["primary"]["endurance"] = this->primary.endurance;
-    save_object["primary"]["health_limit"] = this->primary.health_limit;
-    save_object["primary"]["health"] = this->primary.health;
+    save_object["primary"] = this->primary.be_saved();
     save_object["exp"] = this->exp;
     return save_object;
 }

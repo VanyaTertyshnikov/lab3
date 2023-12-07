@@ -8,7 +8,7 @@
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();
     state->load_player("files/player.json");
-    state->load_map("files/map.txt");
+    state->load_map("files/map.json");
 
     std::shared_ptr<ViewState> view_state = std::make_shared<ViewState>();
     view_state->load_player_view("images/player.png");

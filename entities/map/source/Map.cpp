@@ -14,40 +14,27 @@ bool Map::get_wall(std::pair<int, int> coords) {
             }
         }
     }
+    return false;
 }
 
-void Map::be_loaded(const std::string& file_path) {
+void Map::be_loaded(const std::string &file_path) {
     std::ifstream file(file_path);
+    json data = json::parse(file);
+    file.close();
 
-    file >> this->width >> this->height;
-
-    for(unsigned i = 0; i < this->height; i++) {
+    for(unsigned i = 0; i < 25; i++) {
         std::vector<Cell> new_line;
-        for(unsigned j = 0; j < this->width; j++) {
+        for(unsigned j = 0; j < 40; j++) {
             new_line.push_back(Cell{{j, i}, false});
         }
         this->data_.push_back(new_line);
     }
 
-    std::string read_line;
-    bool first_line = true;
-
-    while(getline(file, read_line)) {
-        if(first_line) {
-            first_line = false;
-            continue;
-        }
-
-        auto space_pos = read_line.find(' ');
-        int read_x = std::stoi(read_line.substr(0, space_pos));
-        int read_y = std::stoi(read_line.substr(space_pos));
-
-        this->data_[read_y][read_x].set_x(read_x);
-        this->data_[read_y][read_x].set_y(read_y);
-        this->data_[read_y][read_x].change_state(true);
+    for(auto cell_data : data) {
+        int x = cell_data["x"];
+        int y = cell_data["y"];
+        this->data_[y][x].be_loaded(cell_data);
     }
-
-    file.close();
 }
 
 std::vector<std::vector<Cell>>& Map::get_cells() {
