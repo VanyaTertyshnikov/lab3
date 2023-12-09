@@ -17,10 +17,16 @@ private:
 public:
     Service() = default;
     explicit Service(const std::shared_ptr<State>& state);
+
+    void upgrade_parameter(int num_of_parameter);
+
     void take_ground(std::pair<int, int> direction);
     void move_player(std::pair<int, int> direction);
+
     void try_take();
-    void upgrade_parameter(int num_of_parameter);
+    void try_throw();
+    void drink();
+    void select(std::pair<int, int> mouse_touch);
 };
 
 #endif //LAB3_SERVICE_H

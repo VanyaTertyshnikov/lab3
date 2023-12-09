@@ -11,10 +11,12 @@
 #include <vector>
 #include <memory>
 
+#include <utility>
+
 #include "Potion.h"
 
 struct Inventory{
-    std::vector<std::shared_ptr<Potion>> potions;
+    std::vector<std::pair<bool, std::shared_ptr<Potion>>> potions;
 };
 
 class Player : public Moveable, public Creature{
@@ -37,11 +39,13 @@ public:
 
     [[nodiscard]] int get_upgrade_points() const;
 
-    [[nodiscard]] std::vector<std::shared_ptr<Potion>> get_potions() const;
+    [[nodiscard]] std::vector<std::pair<bool, std::shared_ptr<Potion>>>& get_potions();
 
     void take_potion(std::shared_ptr<Potion>&& potion);
 
     std::shared_ptr<Potion> throw_potion(unsigned index);
+
+    void drink(unsigned index);
 
     void upgrade_primary(Primary upgrade_value);
 

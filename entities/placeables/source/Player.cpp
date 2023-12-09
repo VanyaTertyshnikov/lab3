@@ -59,16 +59,24 @@ void Player::reduce_upgrade_points() {
 }
 
 void Player::take_potion(std::shared_ptr<Potion>&& potion) {
-    this->inv.potions.push_back(potion);
+    this->inv.potions.emplace_back(false, potion);
 }
 
 std::shared_ptr<Potion> Player::throw_potion(unsigned int index) {
-    std::shared_ptr<Potion> result = this->inv.potions.at(index);
-    std::remove(this->inv.potions.begin(), this->inv.potions.end(), result);
-    return result;
+    std::pair<bool, std::shared_ptr<Potion>> result = this->inv.potions.at(index);
+    this->inv.potions.erase(this->inv.potions.begin() + index, this->inv.potions.begin() + index + 1);
+    return result.second;
 }
 
-std::vector<std::shared_ptr<Potion>> Player::get_potions() const {
+std::vector<std::pair<bool, std::shared_ptr<Potion>>>& Player::get_potions() {
     return this->inv.potions;
+}
+
+void Player::drink(unsigned int index) {
+    auto potion = this->inv.potions.at(index);
+    auto potion_effect = potion.second->be_drunk();
+    this->primary = this->primary + potion_effect;
+    this->inv.potions.erase(this->inv.potions.begin() + index, this->inv.potions.begin() + index + 1);
+    this->compute_secondary();
 }
 

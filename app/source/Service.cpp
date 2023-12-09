@@ -52,3 +52,71 @@ void Service::try_take() {
     }
 }
 
+
+
+bool was_selected(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions){
+    for(const auto& p : potions) {
+        if(p.first) {
+            return true;
+        }
+    }
+    return false;
+}
+
+unsigned get_selected_index(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions) {
+    unsigned index = 0;
+    for(unsigned i = 0; i < potions.size(); i++) {
+        if(potions[i].first) {
+            index = i;
+        }
+    }
+    return index;
+}
+
+void Service::try_throw() {
+    auto player_x = this->state->get_player().get_x();
+    auto player_y = this->state->get_player().get_y();
+    auto curr_floor = this->state->get_map().get_cells()[player_y][player_x];
+    if(curr_floor.get_inner_object() != nullptr)
+        return;
+
+    if(!was_selected(this->state->get_player().get_potions()))
+        return;
+
+    unsigned index = get_selected_index(this->state->get_player().get_potions());
+    this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
+            this->state->get_player().throw_potion(index));
+}
+
+
+void Service::drink() {
+    if(!was_selected(this->state->get_player().get_potions()))
+        return;
+
+    unsigned index = get_selected_index(this->state->get_player().get_potions());
+    std::cout << index << "\n";
+    this->state->get_player().drink(index);
+}
+
+void Service::select(std::pair<int, int> mouse_touch) {
+    if(mouse_touch.second >= 400 && mouse_touch.second <= 432) {
+        if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
+            unsigned index = (mouse_touch.first - 1290) / 32;
+            auto potions_data = this->state->get_player().get_potions();
+
+            if(potions_data.empty()) return;
+            if(index >= potions_data.size()) index = potions_data.size() - 1;
+
+            if(!potions_data.at(index).first) {
+                if(!was_selected(potions_data)) {
+                    this->state->get_player().get_potions().at(index).first = true;
+                }
+            } else {
+                this->state->get_player().get_potions().at(index).first = false;
+            }
+        }
+    }
+}
+
+
+

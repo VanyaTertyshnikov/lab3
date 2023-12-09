@@ -28,6 +28,12 @@ void Controller::process_input(const std::shared_ptr<sf::RenderWindow>& window) 
             if(event.key.scancode == sf::Keyboard::Scan::Q) {
                 this->service_->try_take();
             }
+            if(event.key.scancode == sf::Keyboard::Scan::E) {
+                this->service_->try_throw();
+            }
+            if(event.key.scancode == sf::Keyboard::Scan::R) {
+                this->service_->drink();
+            }
             if(event.key.scancode == sf::Keyboard::Scan::Z) {
                 this->service_->upgrade_parameter(1);
             }
@@ -41,8 +47,7 @@ void Controller::process_input(const std::shared_ptr<sf::RenderWindow>& window) 
 
         if(event.type == sf::Event::MouseButtonPressed) {
             if(event.mouseButton.button == sf::Mouse::Left) {
-                std::cout << event.mouseButton.x << " " << event.mouseButton.y << "\n";
-
+                this->service_->select({event.mouseButton.x, event.mouseButton.y});
             }
         }
     }
