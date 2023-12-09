@@ -4,13 +4,12 @@
 
 #include "PotionView.h"
 
-void PotionView::set_sprite(const sf::Texture& potion_asset, std::shared_ptr<Potion> &data) {
+void PotionView::set_sprite(const sf::Texture& potion_asset, std::shared_ptr<Potion> data) {
     this->sprite.setTexture(potion_asset);
-    if(data->get_potion_effect().health > 0) {
-        this->sprite.setTextureRect(sf::IntRect(0, 32, 32, 32));
-    }
+    this->sprite.setTextureRect(sf::IntRect(0, 32, 32, 32));
 }
 
 sf::Sprite PotionView::get_sprite() const {
     return this->sprite;
 }
+

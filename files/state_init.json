@@ -155,6 +155,21 @@
           }
         }
       }
+    },
+    {"x": 17,"y": 20, "type": "floor",
+      "container":  {
+        "type": "potion",
+        "data": {
+          "name": "Healing potion",
+          "potion_effect": {
+            "power": 0,
+            "ability": 0,
+            "endurance": 0,
+            "health_limit": 10,
+            "health": 0
+          }
+        }
+      }
     }
   ]
 }

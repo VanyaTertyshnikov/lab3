@@ -48,5 +48,6 @@ void ViewState::load(const std::string &file_path) {
 
     this->player_view.be_loaded(data["player"].get<std::string>());
     this->player_info_view.be_loaded(data["font"].get<std::string>());
-    this->map_view.be_loaded(data["map"].get<std::string>());
+    this->map_view.load_cells_asset(data["map"].get<std::string>());
+    this->map_view.load_potions_asset(data["potions"].get<std::string>());
 }

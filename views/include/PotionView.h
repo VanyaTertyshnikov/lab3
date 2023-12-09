@@ -16,7 +16,7 @@ private:
 public:
     PotionView() = default;
 
-    void set_sprite(const sf::Texture& potion_asset, std::shared_ptr<Potion>& data);
+    void set_sprite(const sf::Texture& potion_asset, std::shared_ptr<Potion> data);
 
     sf::Sprite get_sprite() const;
 };

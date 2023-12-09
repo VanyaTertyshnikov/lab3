@@ -17,7 +17,8 @@ private:
 
     void draw_cells_layer(std::shared_ptr<sf::RenderWindow>& window, Map& map);
 
-    void draw_potion_layer(std::shared_ptr<sf::RenderWindow>& window, const std::vector<std::shared_ptr<Potion>>& potions);
+    void draw_potion_layer(std::shared_ptr<sf::RenderWindow>& window,
+                           const std::map<std::pair<int, int>, std::shared_ptr<Potion>>& potions);
 
 
 
@@ -25,6 +26,10 @@ public:
     MapView() = default;
 
     void draw(std::shared_ptr<sf::RenderWindow>& window, Map& map);
+
+    void load_cells_asset(const std::string& file_path);
+
+    void load_potions_asset(const std::string& file_path);
 
     void be_loaded(const std::string& file_path);
 };

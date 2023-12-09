@@ -26,14 +26,14 @@ std::vector<std::vector<Cell>>& Map::get_cells() {
     return this->data_;
 }
 
-std::vector<std::shared_ptr<Potion>> Map::get_all_potions() {
+std::map<std::pair<int, int>, std::shared_ptr<Potion>> Map::get_all_potions() {
     std::shared_ptr<Potion> read_potion;
-    std::vector<std::shared_ptr<Potion>> all_potions;
+    std::map<std::pair<int, int>, std::shared_ptr<Potion>> all_potions;
     for(const auto& line : this->data_) {
         for(const auto& cell : line) {
             read_potion = std::dynamic_pointer_cast<Potion>(cell.get_inner_object());
             if(read_potion) {
-                all_potions.push_back(read_potion);
+                all_potions.insert({{cell.get_x(), cell.get_y()}, read_potion});
             }
         }
     }

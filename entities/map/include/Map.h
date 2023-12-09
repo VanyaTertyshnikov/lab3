@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 #include "Cell.h"
 #include "Potion.h"
 
@@ -19,7 +20,7 @@ public:
 
     std::vector<std::vector<Cell>>& get_cells();
 
-    std::vector<std::shared_ptr<Potion>> get_all_potions();
+    std::map<std::pair<int, int>, std::shared_ptr<Potion>> get_all_potions();
 
     void be_loaded(const json& data);
 };
