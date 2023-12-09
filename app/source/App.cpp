@@ -4,6 +4,11 @@
 #include "App.h"
 #include "ViewState.h"
 #include <iostream>
+#include <thread>
+
+constexpr int fps = 60;
+constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
+
 
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();
@@ -20,5 +25,6 @@ void App::run() {
     while (this->window->isOpen()) {
         this->controller->process_input(this->window);
         this->controller->trigger_redraw(this->window);
+        std::this_thread::sleep_for(refresh_rate);
     }
 }

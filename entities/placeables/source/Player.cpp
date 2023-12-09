@@ -57,3 +57,18 @@ int Player::get_upgrade_points() const {
 void Player::reduce_upgrade_points() {
     this->upgrade_points--;
 }
+
+void Player::take_potion(std::shared_ptr<Potion>&& potion) {
+    this->inv.potions.push_back(potion);
+}
+
+std::shared_ptr<Potion> Player::throw_potion(unsigned int index) {
+    std::shared_ptr<Potion> result = this->inv.potions.at(index);
+    std::remove(this->inv.potions.begin(), this->inv.potions.end(), result);
+    return result;
+}
+
+std::vector<std::shared_ptr<Potion>> Player::get_potions() const {
+    return this->inv.potions;
+}
+

@@ -25,14 +25,24 @@ void Controller::process_input(const std::shared_ptr<sf::RenderWindow>& window) 
             if(event.key.scancode == sf::Keyboard::Scan::D) {
                 this->service_->take_ground({1, 0});
             }
-            if(event.key.scancode == sf::Keyboard::Scan::Num1) {
+            if(event.key.scancode == sf::Keyboard::Scan::Q) {
+                this->service_->try_take();
+            }
+            if(event.key.scancode == sf::Keyboard::Scan::Z) {
                 this->service_->upgrade_parameter(1);
             }
-            if(event.key.scancode == sf::Keyboard::Scan::Num2) {
+            if(event.key.scancode == sf::Keyboard::Scan::X) {
                 this->service_->upgrade_parameter(2);
             }
-            if(event.key.scancode == sf::Keyboard::Scan::Num3) {
+            if(event.key.scancode == sf::Keyboard::Scan::C) {
                 this->service_->upgrade_parameter(3);
+            }
+        }
+
+        if(event.type == sf::Event::MouseButtonPressed) {
+            if(event.mouseButton.button == sf::Mouse::Left) {
+                std::cout << event.mouseButton.x << " " << event.mouseButton.y << "\n";
+
             }
         }
     }

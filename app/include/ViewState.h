@@ -11,6 +11,7 @@
 #include "State.h"
 #include "MapView.h"
 #include "PlayerInfoView.h"
+#include "PlayerInvView.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -19,7 +20,7 @@ private:
     PlayerView player_view{};
     MapView map_view{};
     PlayerInfoView player_info_view{};
-
+    PlayerInvView player_inv_view{};
 
     std::shared_ptr<State> state_;
 
@@ -31,12 +32,6 @@ public:
     void redraw(std::shared_ptr<sf::RenderWindow>& window);
 
     void load(const std::string& file_path);
-
-    void load_player_view(const std::string& file_path);
-
-    void load_map_view(const std::string& file_path);
-
-    void load_player_info_view(const std::string& file_path);
 };
 
 #endif //LAB3_VIEWSTATE_H

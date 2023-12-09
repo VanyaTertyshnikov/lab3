@@ -35,3 +35,20 @@ void Service::upgrade_parameter(int num_of_parameter) {
     this->state->get_player().upgrade_primary(upgrade_struct);
 }
 
+void Service::try_take() {
+    auto player_x = this->state->get_player().get_x();
+    auto player_y = this->state->get_player().get_y();
+    auto curr_floor = this->state->get_map().get_cells()[player_y][player_x];
+    if(curr_floor.get_inner_object() == nullptr)
+        return;
+    std::shared_ptr<Potion> read_potion = std::dynamic_pointer_cast<Potion>(curr_floor.get_inner_object());
+    if(read_potion) {
+        unsigned max_potions_size = this->state->get_player().get_secondary().consumable_limit;
+        unsigned curr_potions_size = this->state->get_player().get_potions().size();
+        if(curr_potions_size < max_potions_size) {
+            this->state->get_player().take_potion(std::move(read_potion));
+            this->state->get_map().get_cells()[player_y][player_x].set_inner_object(nullptr);
+        }
+    }
+}
+

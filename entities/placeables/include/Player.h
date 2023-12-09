@@ -8,22 +8,40 @@
 #include "Moveable.h"
 #include "Creature.h"
 
+#include <vector>
+#include <memory>
+
+#include "Potion.h"
+
+struct Inventory{
+    std::vector<std::shared_ptr<Potion>> potions;
+};
+
 class Player : public Moveable, public Creature{
 private:
     int max_exp = 0, level = 0, upgrade_points = 0;
-    void reduce_upgrade_points();
 
+    //std::vector<std::shared_ptr<Potion>> potions;
+    Inventory inv;
+
+    void reduce_upgrade_points();
 public:
     Player() = default;
     ~Player() override = default;
 
     explicit Player(std::pair<int, int> coords);
 
-    int get_max_exp() const;
+    [[nodiscard]] int get_max_exp() const;
 
-    int get_level() const;
+    [[nodiscard]] int get_level() const;
 
-    int get_upgrade_points() const;
+    [[nodiscard]] int get_upgrade_points() const;
+
+    [[nodiscard]] std::vector<std::shared_ptr<Potion>> get_potions() const;
+
+    void take_potion(std::shared_ptr<Potion>&& potion);
+
+    std::shared_ptr<Potion> throw_potion(unsigned index);
 
     void upgrade_primary(Primary upgrade_value);
 

@@ -6,3 +6,4 @@ file(GLOB
 )
 add_library(placeables STATIC ${Sources} ${Includes})
 target_include_directories(placeables PUBLIC include)
+target_link_libraries(placeables PUBLIC objects)
