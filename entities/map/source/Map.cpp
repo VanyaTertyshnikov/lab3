@@ -6,22 +6,7 @@
 #include <fstream>
 #include "Map.h"
 
-bool Map::get_wall(std::pair<int, int> coords) {
-    for(const auto& line : this->data_) {
-        for(const auto& cell : line) {
-            if(cell.get_x() == coords.first && cell.get_y() == coords.second) {
-                return bool(cell);
-            }
-        }
-    }
-    return false;
-}
-
-void Map::be_loaded(const std::string &file_path) {
-    std::ifstream file(file_path);
-    json data = json::parse(file);
-    file.close();
-
+void Map::be_loaded(const json& data) {
     for(unsigned i = 0; i < 25; i++) {
         std::vector<Cell> new_line;
         for(unsigned j = 0; j < 40; j++) {
@@ -39,4 +24,18 @@ void Map::be_loaded(const std::string &file_path) {
 
 std::vector<std::vector<Cell>>& Map::get_cells() {
     return this->data_;
+}
+
+std::vector<std::shared_ptr<Potion>> Map::get_all_potions() {
+    std::shared_ptr<Potion> read_potion;
+    std::vector<std::shared_ptr<Potion>> all_potions;
+    for(const auto& line : this->data_) {
+        for(const auto& cell : line) {
+            read_potion = std::dynamic_pointer_cast<Potion>(cell.get_inner_object());
+            if(read_potion) {
+                all_potions.push_back(read_potion);
+            }
+        }
+    }
+    return all_potions;
 }

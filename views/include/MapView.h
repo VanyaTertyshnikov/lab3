@@ -12,7 +12,14 @@
 
 class MapView {
 private:
-    sf::Texture texture;
+    sf::Texture cell_texture;
+    sf::Texture potions_texture;
+
+    void draw_cells_layer(std::shared_ptr<sf::RenderWindow>& window, Map& map);
+
+    void draw_potion_layer(std::shared_ptr<sf::RenderWindow>& window, const std::vector<std::shared_ptr<Potion>>& potions);
+
+
 
 public:
     MapView() = default;

@@ -12,10 +12,14 @@
 #include <Service.h>
 #include <State.h>
 
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 800
+#define WINDOW_NAME "Lab 3"
+
 class App {
 private:
     std::shared_ptr<sf::RenderWindow> window
-    = std::make_shared<sf::RenderWindow>(sf::VideoMode(1600, 800), "Lab 3");
+    = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_NAME);
 
     std::shared_ptr<Controller> controller;
 

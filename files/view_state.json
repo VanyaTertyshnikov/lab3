@@ -1,0 +1,6 @@
+{
+  "map": "images/map.png",
+  "player": "images/player.png",
+  "potions": "images/potions.png",
+  "font": "fonts/open_sans/OpenSans-Semibold.ttf"
+}

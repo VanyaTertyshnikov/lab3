@@ -11,22 +11,30 @@
 
 class State {
 private:
+    // Model of Player
     Player player{};
+    // Model of Map
     Map map{};
-    Cell cell{{10, 0}, true};
 
 public:
+    /**
+    * @breif Default constructor
+    */
     State() = default;
 
+    /**
+     * @brief Getter for Player reference
+     * @return Player reference
+     */
     Player& get_player();
 
+    /**
+     * @brief Getter for Map reference
+     * @return Map reference
+     */
     Map& get_map();
 
-    void load_player(const std::string& file_path);
-
-    void save_player(const std::string& file_path);
-
-    void load_map(const std::string& file_path);
+    void load(const std::string& file_path);
 };
 
 #endif //LAB3_STATE_H

@@ -17,9 +17,10 @@
 class ViewState {
 private:
     PlayerView player_view{};
-    CellView cell_view{};
     MapView map_view{};
     PlayerInfoView player_info_view{};
+
+
     std::shared_ptr<State> state_;
 
 public:
@@ -28,6 +29,8 @@ public:
     void set_state(const std::shared_ptr<State>& state);
 
     void redraw(std::shared_ptr<sf::RenderWindow>& window);
+
+    void load(const std::string& file_path);
 
     void load_player_view(const std::string& file_path);
 

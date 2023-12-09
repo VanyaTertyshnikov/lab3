@@ -5,12 +5,13 @@
 #ifndef LAB3_MAP_H
 #define LAB3_MAP_H
 
+#include <memory>
 #include <vector>
 #include "Cell.h"
+#include "Potion.h"
 
 class Map {
 private:
-    unsigned width = 0, height = 0;
     std::vector<std::vector<Cell>> data_;
 
 public:
@@ -18,13 +19,9 @@ public:
 
     std::vector<std::vector<Cell>>& get_cells();
 
-    [[nodiscard]] unsigned get_width() const { return this->width; }
+    std::vector<std::shared_ptr<Potion>> get_all_potions();
 
-    [[nodiscard]] unsigned get_height() const { return this->height; }
-
-    bool get_wall(std::pair<int, int> coords);
-    void be_loaded(const std::string& file_path);
-
+    void be_loaded(const json& data);
 };
 
 
