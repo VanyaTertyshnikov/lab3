@@ -22,6 +22,7 @@ public:
 
     void take_ground(std::pair<int, int> direction);
     void move_player(std::pair<int, int> direction);
+    void unlock(std::pair<int, int> coords);
 
     void try_take();
     void try_throw();

@@ -13,9 +13,30 @@ void Service::move_player(std::pair<int, int> direction) {
 
 Service::Service(const std::shared_ptr<State>& state) : state(state) {}
 
+int get_chest_index(const std::vector<Chest>& chests, std::pair<int, int> coords) {
+    int index = -1;
+
+    for(unsigned i = 0; i < chests.size(); i++) {
+        if(chests[i].get_x() == coords.first && chests[i].get_y() == coords.second) {
+            index = int(i);
+            break;
+        }
+    }
+
+    return index;
+}
+
 void Service::take_ground(std::pair<int, int> direction) {
     int future_x = this->state->get_player().get_x() + direction.first;
     int future_y = this->state->get_player().get_y() + direction.second;
+
+    if(get_chest_index(this->state->get_chests(), {future_x, future_y}) != -1) {
+        if(this->state->get_player().get_key_amount() < 1)
+            return;
+        this->unlock({future_x, future_y});
+        this->state->get_player().reduce_key_amount();
+    }
+
     if(!this->state->get_map().get_cells()[future_y][future_x]) {
         this->move_player(direction);
     }
@@ -73,6 +94,7 @@ unsigned get_selected_index(const std::vector<std::pair<bool, std::shared_ptr<Po
     for(unsigned i = 0; i < potions.size(); i++) {
         if(potions[i].first) {
             index = i;
+            break;
         }
     }
     return index;
@@ -122,6 +144,24 @@ void Service::select(std::pair<int, int> mouse_touch) {
         }
     }
 }
+
+void Service::unlock(std::pair<int, int> coords) {
+    int index = get_chest_index(this->state->get_chests(), coords);
+    if(index == -1) return;
+
+    int resist_points = this->state->get_chests().at(index).get_level() * 5;
+    int unlocking_points = this->state->get_player().get_secondary().unlocking * 3 + 10;
+    if(resist_points > unlocking_points) {
+        this->state->get_player().reduce_key_amount();
+    } else {
+        this->state->get_map().get_cells()[coords.first][coords.second].set_inner_object(
+                this->state->get_chests()[index].get_inner_object()
+                );
+        this->state->get_chests().erase(this->state->get_chests().begin() + index,
+                                        this->state->get_chests().begin() + index + 1);
+    }
+}
+
 
 
 
