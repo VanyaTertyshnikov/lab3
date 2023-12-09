@@ -4,7 +4,7 @@
 
 #include "Key.h"
 
-unsigned Key::get_amount() const {
+int Key::get_amount() const {
     return this->amount_;
 }
 

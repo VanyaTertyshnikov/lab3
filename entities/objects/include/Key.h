@@ -14,13 +14,13 @@ using json =  nlohmann::json;
 
 class Key : public Object {
 private:
-    unsigned amount_;
+    int amount_{};
 
 public:
     Key() = default;
     ~Key() override = default;
 
-    [[nodiscard]] unsigned get_amount() const;
+    [[nodiscard]] int get_amount() const;
 
     void be_loaded(json data) override;
 

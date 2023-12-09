@@ -50,6 +50,11 @@ void Service::try_take() {
             this->state->get_map().get_cells()[player_y][player_x].set_inner_object(nullptr);
         }
     }
+    std::shared_ptr<Key> read_key = std::dynamic_pointer_cast<Key>(curr_floor.get_inner_object());
+    if(read_key) {
+        this->state->get_player().inc_key_amount(read_key->get_amount());
+        this->state->get_map().get_cells()[player_y][player_x].set_inner_object(nullptr);
+    }
 }
 
 
