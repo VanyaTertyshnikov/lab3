@@ -39,3 +39,17 @@ std::map<std::pair<int, int>, std::shared_ptr<Potion>> Map::get_all_potions() {
     }
     return all_potions;
 }
+
+std::map<std::pair<int, int>, std::shared_ptr<Key>> Map::get_all_keys() {
+    std::shared_ptr<Key> read_key;
+    std::map<std::pair<int, int>, std::shared_ptr<Key>> all_keys;
+    for(const auto& line : this->data_) {
+        for(const auto& cell : line) {
+            read_key = std::dynamic_pointer_cast<Key>(cell.get_inner_object());
+            if(read_key) {
+                all_keys.insert({{cell.get_x(), cell.get_y()}, read_key});
+            }
+        }
+    }
+    return all_keys;
+}

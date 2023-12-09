@@ -10,6 +10,7 @@
 #include <map>
 #include "Cell.h"
 #include "Potion.h"
+#include "Key.h"
 
 class Map {
 private:
@@ -21,6 +22,8 @@ public:
     std::vector<std::vector<Cell>>& get_cells();
 
     std::map<std::pair<int, int>, std::shared_ptr<Potion>> get_all_potions();
+
+    std::map<std::pair<int, int>, std::shared_ptr<Key>> get_all_keys();
 
     void be_loaded(const json& data);
 };

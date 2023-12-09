@@ -203,6 +203,18 @@
           }
         }
       }
+    },
+    {
+      "x": 7,
+      "y": 12,
+      "type": "floor",
+      "container": {
+        "type": "key",
+        "data": {
+          "name": "Magic key",
+          "amount": 10
+        }
+      }
     }
   ]
 }

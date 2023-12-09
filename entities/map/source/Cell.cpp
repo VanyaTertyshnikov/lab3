@@ -4,6 +4,7 @@
 
 #include "Cell.h"
 #include "Potion.h"
+#include "Key.h"
 #include <iostream>
 
 Cell::Cell(std::pair<int, int> coords) : Placeable(coords) {}
@@ -35,6 +36,10 @@ void Cell::be_loaded(json data) {
     } else if(data["type"].get<std::string>() == "floor") {
         if(data["container"]["type"].get<std::string>() == "potion") {
             this->inner_object = std::make_shared<Potion>();
+            this->inner_object->be_loaded(data["container"]["data"]);
+        }
+        if(data["container"]["type"].get<std::string>() == "key") {
+            this->inner_object = std::make_shared<Key>();
             this->inner_object->be_loaded(data["container"]["data"]);
         }
     }

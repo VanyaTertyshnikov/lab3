@@ -19,6 +19,7 @@ void ViewState::redraw(std::shared_ptr<sf::RenderWindow>& window) {
     this->player_info_view.draw(window, this->state_->get_player());
     this->player_inv_view.draw(window, this->state_->get_player());
 
+
     window->display();
 }
 
@@ -33,6 +34,7 @@ void ViewState::load(const std::string &file_path) {
     this->player_info_view.be_loaded(data["font"].get<std::string>());
     this->map_view.load_cells_asset(data["map"].get<std::string>());
     this->map_view.load_potions_asset(data["potions"].get<std::string>());
+    this->map_view.load_key_asset(data["key"].get<std::string>());
     this->player_inv_view.load_potions_asset(data["potions"].get<std::string>());
     this->player_inv_view.load_font(data["font"].get<std::string>());
 }

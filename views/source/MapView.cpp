@@ -5,12 +5,14 @@
 #include "MapView.h"
 #include "CellView.h"
 #include "PotionView.h"
+#include "KeyView.h"
 
 #include <iostream>
 
 void MapView::draw(std::shared_ptr<sf::RenderWindow> &window, Map& map) {
     this->draw_cells_layer(window, map);
     this->draw_potion_layer(window, map.get_all_potions());
+    this->draw_key_layer(window, map.get_all_keys());
 }
 
 void MapView::be_loaded(const std::string &file_path) {
@@ -51,6 +53,23 @@ void MapView::draw_potion_layer(std::shared_ptr<sf::RenderWindow> &window,
     }
 }
 
+void MapView::draw_key_layer(std::shared_ptr<sf::RenderWindow> &window,
+                             const std::map<std::pair<int, int>, std::shared_ptr<Key>> &keys) {
+    KeyView key_view;
+    for(const auto& key : keys) {
+        key_view.set_sprite(this->key_texture);
+        sf::Sprite key_sprite = key_view.get_sprite();
+        float x_position = key.first.first * 32;
+        float y_position = key.first.second * 32;
+
+        key_sprite.setPosition(
+                x_position,
+                y_position
+        );
+        window->draw(key_sprite);
+
+    }
+}
 
 void MapView::load_cells_asset(const std::string &file_path) {
     this->cell_texture.loadFromFile(file_path);
@@ -59,5 +78,12 @@ void MapView::load_cells_asset(const std::string &file_path) {
 void MapView::load_potions_asset(const std::string &file_path) {
     this->potions_texture.loadFromFile(file_path);
 }
+
+
+void MapView::load_key_asset(const std::string &file_path) {
+    this->key_texture.loadFromFile(file_path);
+}
+
+
 
 
