@@ -23,6 +23,8 @@ class Player : public Moveable, public Creature{
 private:
     int max_exp = 0, level = 0, upgrade_points = 0;
 
+    int key_amount_ = 0;
+
     //std::vector<std::shared_ptr<Potion>> potions;
     Inventory inv;
 
@@ -40,6 +42,12 @@ public:
     [[nodiscard]] int get_upgrade_points() const;
 
     [[nodiscard]] std::vector<std::pair<bool, std::shared_ptr<Potion>>>& get_potions();
+
+    [[nodiscard]] int get_key_amount() const;
+
+    void inc_key_amount(int change);
+
+    void reduce_key_amount();
 
     void take_potion(std::shared_ptr<Potion>&& potion);
 

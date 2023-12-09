@@ -17,7 +17,6 @@ void PlayerInfoView::draw(std::shared_ptr<sf::RenderWindow> &window, Player &pla
     float space_value = 20;
     int font_size = 15;
 
-
     sf::Text health(
             std::string("Heat points:\t") + std::to_string(player.get_primary().health)
             + std::string("/") + std::to_string(player.get_primary().health_limit),
@@ -83,6 +82,12 @@ void PlayerInfoView::draw(std::shared_ptr<sf::RenderWindow> &window, Player &pla
             this->font,
             font_size);
 
+    sf::Text key_amount(
+            std::string("Keys: \t") + std::to_string(player.get_key_amount()),
+            this->font,
+            font_size
+            );
+
     health.setPosition(this->position.first + space_value, this->position.second + space_value);
     window->draw(health);
 
@@ -123,6 +128,10 @@ void PlayerInfoView::draw(std::shared_ptr<sf::RenderWindow> &window, Player &pla
     consumable_limit.setPosition(this->position.first + space_value,
                                  this->position.second + 10 * space_value + 2 * big_space_value);
     window->draw(consumable_limit);
+
+    key_amount.setPosition(this->position.first + space_value,
+                                 this->position.second + 11 * space_value + 2 * big_space_value);
+    window->draw(key_amount);
 }
 
 

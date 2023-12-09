@@ -54,6 +54,14 @@ int Player::get_upgrade_points() const {
     return this->upgrade_points;
 }
 
+std::vector<std::pair<bool, std::shared_ptr<Potion>>>& Player::get_potions() {
+    return this->inv.potions;
+}
+
+int Player::get_key_amount() const {
+    return this->key_amount_;
+}
+
 void Player::reduce_upgrade_points() {
     this->upgrade_points--;
 }
@@ -68,9 +76,6 @@ std::shared_ptr<Potion> Player::throw_potion(unsigned int index) {
     return result.second;
 }
 
-std::vector<std::pair<bool, std::shared_ptr<Potion>>>& Player::get_potions() {
-    return this->inv.potions;
-}
 
 void Player::drink(unsigned int index) {
     auto potion = this->inv.potions.at(index);
@@ -79,4 +84,15 @@ void Player::drink(unsigned int index) {
     this->inv.potions.erase(this->inv.potions.begin() + index, this->inv.potions.begin() + index + 1);
     this->compute_secondary();
 }
+
+void Player::inc_key_amount(int change) {
+    this->key_amount_ += change;
+}
+
+void Player::reduce_key_amount() {
+    this->key_amount_--;
+    if(key_amount_ < 0)
+        key_amount_ = 0;
+}
+
 
