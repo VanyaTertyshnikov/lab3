@@ -14,6 +14,10 @@ Map &State::get_map() {
     return this->map;
 }
 
+std::vector<Chest> &State::get_chests() {
+    return this->chests;
+}
+
 void State::load(const std::string &file_path) {
     std::ifstream file(file_path);
     if(!file.is_open())
@@ -23,7 +27,14 @@ void State::load(const std::string &file_path) {
 
     this->player.be_loaded(data["player"]);
     this->map.be_loaded(data["map"]);
+
+    for(const auto& chest_data : data["chests"]) {
+        Chest new_chest;
+        new_chest.be_loaded(chest_data);
+        this->chests.push_back(new_chest);
+    }
 }
+
 
 
 

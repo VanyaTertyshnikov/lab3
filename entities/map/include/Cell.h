@@ -31,7 +31,7 @@ public:
 
     void change_state(bool state);
 
-    void be_loaded(json data);
+    void be_loaded(json data) override;
 };
 
 

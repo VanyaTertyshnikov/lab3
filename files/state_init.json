@@ -216,5 +216,25 @@
         }
       }
     }
+  ],
+  "chests": [
+    {
+      "x": 19,
+      "y": 19,
+      "container": {
+        "level": 3,
+        "type": "potion",
+        "data": {
+          "name": "Healing potion",
+          "potion_effect": {
+            "power": 0,
+            "ability": 0,
+            "endurance": 0,
+            "health_limit": 0,
+            "health": 10
+          }
+        }
+      }
+    }
   ]
 }

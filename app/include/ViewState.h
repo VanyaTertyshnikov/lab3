@@ -12,6 +12,7 @@
 #include "MapView.h"
 #include "PlayerInfoView.h"
 #include "PlayerInvView.h"
+#include "AllChestsView.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -21,6 +22,7 @@ private:
     MapView map_view{};
     PlayerInfoView player_info_view{};
     PlayerInvView player_inv_view{};
+    AllChestsView all_chests_view{};
 
     std::shared_ptr<State> state_;
 

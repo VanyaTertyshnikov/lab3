@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Cell.h"
 #include "Map.h"
+#include "Chest.h"
 
 class State {
 private:
@@ -15,6 +16,7 @@ private:
     Player player{};
     // Model of Map
     Map map{};
+    std::vector<Chest> chests;
 
 public:
     /**
@@ -33,6 +35,8 @@ public:
      * @return Map reference
      */
     Map& get_map();
+
+    std::vector<Chest>& get_chests();
 
     void load(const std::string& file_path);
 };

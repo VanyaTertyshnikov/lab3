@@ -3,5 +3,6 @@
   "player": "images/player.png",
   "potions": "images/potions.png",
   "key": "images/key.png",
+  "chest": "images/chest.png",
   "font": "fonts/open_sans/OpenSans-Semibold.ttf"
 }
