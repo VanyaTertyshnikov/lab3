@@ -10,6 +10,12 @@
 
 #include "State.h"
 
+enum Parameters : int {
+    Power,
+    Ability,
+    Endurance
+};
+
 class Service {
 private:
     std::shared_ptr<State> state = std::make_shared<State>();

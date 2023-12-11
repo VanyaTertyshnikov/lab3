@@ -21,6 +21,8 @@ public:
 
     [[nodiscard]] int get_x() const;
 
+    [[nodiscard]] std::pair<int, int> get_position() const;
+
     void set_x(int new_x);
 
     [[nodiscard]] int get_y() const;
@@ -31,5 +33,7 @@ public:
 
     [[nodiscard]] virtual json be_saved() const;
 };
+
+std::pair<int, int> operator+(const std::pair<int, int>& a, const std::pair<int, int>& b);
 
 #endif //LAB3_PLACEABLE_H

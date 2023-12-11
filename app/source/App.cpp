@@ -9,7 +9,7 @@
 constexpr int fps = 60;
 constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
 
-constexpr float delay = 0.3;
+constexpr float delay = 0.2;
 
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();

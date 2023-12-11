@@ -13,7 +13,7 @@ int get_chest_index(const std::vector<Chest>& chests, std::pair<int, int> coords
     int index = -1;
 
     for(unsigned i = 0; i < chests.size(); i++) {
-        if(chests[i].get_x() == coords.first && chests[i].get_y() == coords.second) {
+        if(chests[i].get_position() == coords) {
             index = int(i);
             break;
         }
@@ -26,7 +26,7 @@ int get_enemy_index(const std::vector<Enemy>& enemies, std::pair<int, int> coord
     int index = -1;
 
     for(unsigned i = 0; i < enemies.size(); i++) {
-        if(enemies[i].get_x() == coords.first && enemies[i].get_y() == coords.second) {
+        if(enemies[i].get_position() == coords) {
             index = int(i);
             break;
         }
@@ -36,41 +36,37 @@ int get_enemy_index(const std::vector<Enemy>& enemies, std::pair<int, int> coord
 }
 
 void Service::take_ground(std::pair<int, int> direction) {
-    int future_x = this->state->get_player().get_x() + direction.first;
-    int future_y = this->state->get_player().get_y() + direction.second;
+    std::pair<int, int> future_position = this->state->get_player().get_position() + direction;
 
-    if(get_chest_index(this->state->get_chests(), {future_x, future_y}) != -1) {
+    if(get_chest_index(this->state->get_chests(), future_position) != -1) {
         if(this->state->get_player().get_key_amount() < 1)
             return;
-        this->unlock({future_x, future_y});
+        this->unlock(future_position);
         this->state->get_player().reduce_key_amount();
     }
 
-    if(get_enemy_index(this->state->get_enemies(), {future_x, future_y}) != -1)
+    if(get_enemy_index(this->state->get_enemies(), future_position) != -1)
         return;
 
-    if(!this->state->get_map().get_cells()[future_y][future_x]) {
-        this->move_player(direction);
+    if(!this->state->get_map().get_cells()[future_position.second][future_position.first]) {
+        this->move_player(future_position);
     }
 }
 
 
-void Service::move_player(std::pair<int, int> direction) {
-    this->state->get_player().be_moved(
-            {this->state->get_player().get_x() + direction.first,
-             this->state->get_player().get_y() + direction.second}
-    );
+void Service::move_player(std::pair<int, int> future_position) {
+    this->state->get_player().be_moved(future_position);
 }
 
 void Service::upgrade_parameter(int num_of_parameter) {
     if(this->state->get_player().get_upgrade_points()  < 1)
         return;
     Primary upgrade_struct;
-    if(num_of_parameter == 1) { // upgrade power
+    if(num_of_parameter == Parameters::Power) { // upgrade power
         upgrade_struct.power = 1;
-    } else if(num_of_parameter == 2) { // upgrade ability
+    } else if(num_of_parameter == Parameters::Ability) { // upgrade ability
         upgrade_struct.ability = 1;
-    } else if(num_of_parameter == 3) { // upgrade endurance
+    } else if(num_of_parameter == Parameters::Endurance) { // upgrade endurance
         upgrade_struct.endurance = 1;
     }
     this->state->get_player().upgrade_primary(upgrade_struct);

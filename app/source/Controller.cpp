@@ -35,13 +35,13 @@ void Controller::process_input(const std::shared_ptr<sf::RenderWindow>& window) 
                 this->service_->drink();
             }
             if(event.key.scancode == sf::Keyboard::Scan::Z) {
-                this->service_->upgrade_parameter(1);
+                this->service_->upgrade_parameter(Parameters::Power);
             }
             if(event.key.scancode == sf::Keyboard::Scan::X) {
-                this->service_->upgrade_parameter(2);
+                this->service_->upgrade_parameter(Parameters::Ability);
             }
             if(event.key.scancode == sf::Keyboard::Scan::C) {
-                this->service_->upgrade_parameter(3);
+                this->service_->upgrade_parameter(Parameters::Endurance);
             }
         }
 

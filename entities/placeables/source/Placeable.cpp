@@ -24,3 +24,11 @@ json Placeable::be_saved() const {
     save_object["y"] = this->coords.second;
     return save_object;
 }
+
+std::pair<int, int> Placeable::get_position() const {
+    return this->coords;
+}
+
+std::pair<int, int> operator+(const std::pair<int, int>& a, const std::pair<int, int>& b) {
+    return {a.first + b.first, a.second + b.second};
+}
