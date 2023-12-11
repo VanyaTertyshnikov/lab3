@@ -252,6 +252,36 @@
       "max_exp": 75,
       "level": 2,
       "upgrade_points": 10
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "primary": {
+        "power": 10,
+        "ability": 15,
+        "endurance": 5,
+        "health_limit": 100,
+        "health": 70
+      },
+      "exp": 30,
+      "max_exp": 75,
+      "level": 2,
+      "upgrade_points": 10
+    },
+    {
+      "x": 31,
+      "y": 1,
+      "primary": {
+        "power": 10,
+        "ability": 15,
+        "endurance": 5,
+        "health_limit": 100,
+        "health": 70
+      },
+      "exp": 30,
+      "max_exp": 75,
+      "level": 2,
+      "upgrade_points": 10
     }
   ]
 }

@@ -26,6 +26,19 @@ int get_chest_index(const std::vector<Chest>& chests, std::pair<int, int> coords
     return index;
 }
 
+int get_enemy_index(const std::vector<Enemy>& enemies, std::pair<int, int> coords) {
+    int index = -1;
+
+    for(unsigned i = 0; i < enemies.size(); i++) {
+        if(enemies[i].get_x() == coords.first && enemies[i].get_y() == coords.second) {
+            index = int(i);
+            break;
+        }
+    }
+
+    return index;
+}
+
 void Service::take_ground(std::pair<int, int> direction) {
     int future_x = this->state->get_player().get_x() + direction.first;
     int future_y = this->state->get_player().get_y() + direction.second;
@@ -36,6 +49,9 @@ void Service::take_ground(std::pair<int, int> direction) {
         this->unlock({future_x, future_y});
         this->state->get_player().reduce_key_amount();
     }
+
+    if(get_enemy_index(this->state->get_enemies(), {future_x, future_y}) != -1)
+        return;
 
     if(!this->state->get_map().get_cells()[future_y][future_x]) {
         this->move_player(direction);
