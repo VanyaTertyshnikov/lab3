@@ -236,5 +236,22 @@
         }
       }
     }
+  ],
+  "enemies": [
+    {
+      "x": 21,
+      "y": 21,
+      "primary": {
+        "power": 10,
+        "ability": 15,
+        "endurance": 5,
+        "health_limit": 100,
+        "health": 70
+      },
+      "exp": 30,
+      "max_exp": 75,
+      "level": 2,
+      "upgrade_points": 10
+    }
   ]
 }

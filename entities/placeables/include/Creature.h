@@ -53,11 +53,11 @@ public:
 
     [[nodiscard]] Secondary get_secondary() const;
 
-    int get_exp() const;
+    [[nodiscard]] int get_exp() const;
 
     void be_loaded(json data) override;
 
-    json be_saved() const override;
+    [[nodiscard]] json be_saved() const override;
 };
 
 #endif //LAB3_CREATURE_H

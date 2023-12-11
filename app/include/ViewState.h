@@ -13,6 +13,7 @@
 #include "PlayerInfoView.h"
 #include "PlayerInvView.h"
 #include "AllChestsView.h"
+#include "AllEnemiesView.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -23,6 +24,7 @@ private:
     PlayerInfoView player_info_view{};
     PlayerInvView player_inv_view{};
     AllChestsView all_chests_view{};
+    AllEnemiesView all_enemies_view{};
 
     std::shared_ptr<State> state_;
 

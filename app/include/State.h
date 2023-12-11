@@ -9,6 +9,7 @@
 #include "Cell.h"
 #include "Map.h"
 #include "Chest.h"
+#include "Enemy.h"
 
 class State {
 private:
@@ -17,6 +18,7 @@ private:
     // Model of Map
     Map map{};
     std::vector<Chest> chests;
+    std::vector<Enemy> enemies;
 
 public:
     /**
@@ -37,6 +39,8 @@ public:
     Map& get_map();
 
     std::vector<Chest>& get_chests();
+
+    std::vector<Enemy> get_enemies();
 
     void load(const std::string& file_path);
 };

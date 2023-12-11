@@ -4,5 +4,6 @@
   "potions": "images/potions.png",
   "key": "images/key.png",
   "chest": "images/chest.png",
+  "enemy": "images/enemy.png",
   "font": "fonts/open_sans/OpenSans-Semibold.ttf"
 }
