@@ -9,7 +9,7 @@
 constexpr int fps = 60;
 constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
 
-constexpr float delay = 0.10;
+constexpr float delay = 0.3;
 
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();
@@ -30,6 +30,7 @@ void App::run() {
         }
         timer.restart();
         this->controller->process_input(this->window);
+        this->controller->trigger_update();
         this->controller->trigger_redraw(this->window);
         std::this_thread::sleep_for(refresh_rate);
     }

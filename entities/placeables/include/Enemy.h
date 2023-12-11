@@ -7,8 +7,15 @@
 
 
 #include "Creature.h"
+#include "Moveable.h"
 
-class Enemy : public Creature {};
+class Enemy : public Creature, public Moveable {
+public:
+    Enemy() = default;
+    ~Enemy() override = default;
+
+    void be_moved(std::pair<int, int> new_coords) override;
+};
 
 
 #endif //LAB3_ENEMY_H

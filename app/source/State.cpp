@@ -43,7 +43,7 @@ void State::load(const std::string &file_path) {
     //std::cout << "!!" << std::endl;
 }
 
-std::vector<Enemy> State::get_enemies() {
+std::vector<Enemy>& State::get_enemies() {
     return this->enemies;
 }
 

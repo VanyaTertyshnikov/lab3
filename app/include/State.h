@@ -40,7 +40,7 @@ public:
 
     std::vector<Chest>& get_chests();
 
-    std::vector<Enemy> get_enemies();
+    std::vector<Enemy>& get_enemies();
 
     void load(const std::string& file_path);
 };

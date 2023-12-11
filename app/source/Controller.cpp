@@ -63,3 +63,7 @@ void Controller::set_service(const std::shared_ptr<Service> &service) {
 void Controller::trigger_redraw(std::shared_ptr<sf::RenderWindow> &window) {
     this->view_state->redraw(window);
 }
+
+void Controller::trigger_update() {
+    this->service_->update_all_enemies();
+}

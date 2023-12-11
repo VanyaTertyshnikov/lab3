@@ -23,6 +23,7 @@ public:
     void set_service(const std::shared_ptr<Service>& service);
 
     void process_input(const std::shared_ptr<sf::RenderWindow>& window);
+    void trigger_update();
     void trigger_redraw(std::shared_ptr<sf::RenderWindow>& window);
 };
 
