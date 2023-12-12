@@ -9,8 +9,6 @@
 constexpr int fps = 60;
 constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
 
-constexpr float delay = 0.2;
-
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();
     state->load("files/state_init.json");
@@ -23,14 +21,11 @@ void App::run() {
 
     this->controller = std::make_shared<Controller>(service, view_state);
 
-    sf::Clock timer;
+    sf::Clock clock;
     while (this->window->isOpen()) {
-        if(timer.getElapsedTime().asSeconds() < delay){
-            continue;
-        }
-        timer.restart();
-        this->controller->process_input(this->window);
-        this->controller->trigger_update();
+        clock.restart();
+        this->controller->process_input(this->window, clock);
+        //this->controller->trigger_update();
         this->controller->trigger_redraw(this->window);
         std::this_thread::sleep_for(refresh_rate);
     }
