@@ -11,6 +11,7 @@
 #include "Cell.h"
 #include "Potion.h"
 #include "Key.h"
+#include "Equipment.h"
 
 class Map {
 private:
@@ -24,6 +25,8 @@ public:
     std::map<std::pair<int, int>, std::shared_ptr<Potion>> get_all_potions();
 
     std::map<std::pair<int, int>, std::shared_ptr<Key>> get_all_keys();
+
+    std::map<std::pair<int, int>, std::shared_ptr<Equipment>> get_all_equipments();
 
     void be_loaded(const json& data);
 };

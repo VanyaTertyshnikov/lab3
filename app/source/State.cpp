@@ -34,13 +34,11 @@ void State::load(const std::string &file_path) {
         this->chests.push_back(new_chest);
     }
 
-    //std::cout << "!!" << std::endl;
     for(const auto& enemy_data : data["enemies"]) {
         Enemy new_chest;
         new_chest.be_loaded(enemy_data);
         this->enemies.push_back(new_chest);
     }
-    //std::cout << "!!" << std::endl;
 }
 
 std::vector<Enemy>& State::get_enemies() {

@@ -53,3 +53,17 @@ std::map<std::pair<int, int>, std::shared_ptr<Key>> Map::get_all_keys() {
     }
     return all_keys;
 }
+
+std::map<std::pair<int, int>, std::shared_ptr<Equipment>> Map::get_all_equipments() {
+    std::shared_ptr<Equipment> read_equipment;
+    std::map<std::pair<int, int>, std::shared_ptr<Equipment>> all_equipments;
+    for(const auto& line : this->data_) {
+        for(const auto& cell : line) {
+            read_equipment = std::dynamic_pointer_cast<Equipment>(cell.get_inner_object());
+            if(read_equipment) {
+                all_equipments.insert({{cell.get_x(), cell.get_y()}, read_equipment});
+            }
+        }
+    }
+    return all_equipments;
+}

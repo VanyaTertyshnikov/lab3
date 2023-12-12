@@ -188,7 +188,7 @@
     },
     {
       "x": 7,
-      "y": 12,
+      "y": 18,
       "type": "floor",
       "container": {
         "type": "potion",
@@ -215,7 +215,39 @@
           "amount": 10
         }
       }
-    }
+    },
+    {"x":  30, "y":  20, "type": "floor", "container":  {
+      "type": "equipment",
+      "data": {
+        "name": "Plate",
+        "placement": "body",
+        "defence": 3
+      }
+    }},
+    {"x":  20, "y":  20, "type": "floor", "container":  {
+      "type": "equipment",
+      "data": {
+        "name": "Helmet",
+        "placement": "head",
+        "defence": 3
+      }
+    }},
+    {"x":  21, "y":  20, "type": "floor", "container":  {
+      "type": "equipment",
+      "data": {
+        "name": "Boots",
+        "placement": "legs",
+        "defence": 3
+      }
+    }},
+    {"x":  20, "y":  21, "type": "floor", "container":  {
+      "type": "equipment",
+      "data": {
+        "name": "Gloves",
+        "placement": "hands",
+        "defence": 3
+      }
+    }}
   ],
   "chests": [
     {

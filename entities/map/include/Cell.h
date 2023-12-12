@@ -29,8 +29,6 @@ public:
 
     explicit operator bool() const;
 
-    void change_state(bool state);
-
     void be_loaded(json data) override;
 };
 

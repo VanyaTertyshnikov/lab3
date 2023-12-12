@@ -5,6 +5,7 @@
 #include "Cell.h"
 #include "Potion.h"
 #include "Key.h"
+#include "Equipment.h"
 #include <iostream>
 
 Cell::Cell(std::pair<int, int> coords) : Placeable(coords) {}
@@ -15,10 +16,6 @@ Cell::Cell(std::pair<int, int> coords, bool is_wall) : Placeable(coords) {
 
 Cell::operator bool() const {
     return this->is_wall_;
-}
-
-void Cell::change_state(bool state) {
-    this->is_wall_ = state;
 }
 
 std::shared_ptr<Object> Cell::get_inner_object() const {
@@ -40,6 +37,10 @@ void Cell::be_loaded(json data) {
         }
         if(data["container"]["type"].get<std::string>() == "key") {
             this->inner_object = std::make_shared<Key>();
+            this->inner_object->be_loaded(data["container"]["data"]);
+        }
+        if(data["container"]["type"].get<std::string>() == "equipment") {
+            this->inner_object = std::make_shared<Equipment>();
             this->inner_object->be_loaded(data["container"]["data"]);
         }
     }
