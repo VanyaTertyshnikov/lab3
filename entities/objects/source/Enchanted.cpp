@@ -23,6 +23,7 @@ int Enchanted::get_worst() const {
 
 void Enchanted::be_loaded(json data) {
     this->target_trait_ = data["target_trait"].get<std::string>();
+    this->avoid_trait_ = data["avoid_trait"].get<std::string>();
     this->best_ = data["best"].get<int>();
     this->worst_ = data["worst"].get<int>();
 }

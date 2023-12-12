@@ -262,6 +262,60 @@
           "health": 0
         }
       }
+    }},
+    {"x":  6, "y":  3, "type": "floor", "container":  {
+      "type": "weapon",
+      "data": {
+        "name": "Sword",
+        "damage": 10
+      }
+    }},
+    {"x":  7, "y":  3, "type": "floor", "container":  {
+      "type": "weapon-artifact",
+      "data": {
+        "name": "Sword",
+        "damage": 10
+      },
+      "influence": {
+        "power": 5,
+        "ability": 5,
+        "endurance": 5,
+        "health_limit": 0,
+        "health": 0
+      }
+    }},
+    {"x":  8, "y":  3, "type": "floor", "container":  {
+      "type": "weapon-enchanted",
+      "data": {
+        "name": "Sword",
+        "damage": 10
+      },
+      "enchanted": {
+        "target_trait": "Human",
+        "avoid_trait": "Undead",
+        "best": 3,
+        "worst": 2
+      }
+    }},
+    {"x":  9, "y":  3, "type": "floor", "container":  {
+      "type": "weapon-mixed",
+      "data": {
+        "name": "Sword",
+        "damage": 10
+      },
+      "influence": {
+        "power": 5,
+        "ability": 5,
+        "endurance": 5,
+        "health_limit": 0,
+        "health": 0
+      },
+      "enchanted": {
+        "target_trait": "Human",
+        "avoid_trait": "Undead",
+        "best": 3,
+        "worst": 2
+      }
     }}
   ],
   "chests": [

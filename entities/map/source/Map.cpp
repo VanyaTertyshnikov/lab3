@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "Map.h"
+#include "Weapon.h"
 
 void Map::be_loaded(const json& data) {
     for(unsigned i = 0; i < 25; i++) {
@@ -66,4 +67,18 @@ std::map<std::pair<int, int>, std::shared_ptr<Equipment>> Map::get_all_equipment
         }
     }
     return all_equipments;
+}
+
+std::map<std::pair<int, int>, std::shared_ptr<Weapon>> Map::get_all_weapons() {
+    std::shared_ptr<Weapon> read_weapon;
+    std::map<std::pair<int, int>, std::shared_ptr<Weapon>> all_weapons;
+    for(const auto& line : this->data_) {
+        for(const auto& cell : line) {
+            read_weapon = std::dynamic_pointer_cast<Weapon>(cell.get_inner_object());
+            if(read_weapon) {
+                all_weapons.insert({{cell.get_x(), cell.get_y()}, read_weapon});
+            }
+        }
+    }
+    return all_weapons;
 }

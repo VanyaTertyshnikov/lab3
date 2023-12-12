@@ -7,6 +7,7 @@
 #include "PotionView.h"
 #include "KeyView.h"
 #include "EquipmentView.h"
+#include "WeaponView.h"
 
 #include <iostream>
 
@@ -15,6 +16,7 @@ void MapView::draw(std::shared_ptr<sf::RenderWindow> &window, Map& map) {
     this->draw_potion_layer(window, map.get_all_potions());
     this->draw_key_layer(window, map.get_all_keys());
     this->draw_equipment_layer(window, map.get_all_equipments());
+    this->draw_weapon_layer(window, map.get_all_weapons());
 }
 
 void MapView::be_loaded(const std::string &file_path) {
@@ -92,6 +94,24 @@ void MapView::draw_equipment_layer(std::shared_ptr<sf::RenderWindow> &window,
     }
 }
 
+void MapView::draw_weapon_layer(std::shared_ptr<sf::RenderWindow> &window,
+                                const std::map<std::pair<int, int>, std::shared_ptr<Weapon>> &weapons) {
+    WeaponView weapon_view;
+    for(const auto & weapon : weapons) {
+        weapon_view.set_sprite(this->weapon_texture, weapon.second);
+        sf::Sprite weapon_sprite = weapon_view.get_sprite();
+        float x_position = weapon.first.first * 32;
+        float y_position = weapon.first.second * 32;
+
+        weapon_sprite.setPosition(
+                x_position,
+                y_position
+        );
+        window->draw(weapon_sprite);
+
+    }
+}
+
 void MapView::load_cells_asset(const std::string &file_path) {
     this->cell_texture.loadFromFile(file_path);
 }
@@ -100,7 +120,6 @@ void MapView::load_potions_asset(const std::string &file_path) {
     this->potions_texture.loadFromFile(file_path);
 }
 
-
 void MapView::load_key_asset(const std::string &file_path) {
     this->key_texture.loadFromFile(file_path);
 }
@@ -108,6 +127,11 @@ void MapView::load_key_asset(const std::string &file_path) {
 void MapView::load_equipment_asset(const std::string &file_path) {
     this->equipment_texture.loadFromFile(file_path);
 }
+
+void MapView::load_weapon_asset(const std::string &file_path) {
+    this->weapon_texture.loadFromFile(file_path);
+}
+
 
 
 

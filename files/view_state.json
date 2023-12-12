@@ -7,5 +7,5 @@
   "enemy": "images/enemy.png",
   "font": "fonts/open_sans/OpenSans-Semibold.ttf",
   "equipment": "images/equipment.png",
-  "weapon": "weapon.png"
+  "weapon": "images/weapon.png"
 }

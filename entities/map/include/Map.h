@@ -12,6 +12,7 @@
 #include "Potion.h"
 #include "Key.h"
 #include "Equipment.h"
+#include "Weapon.h"
 
 class Map {
 private:
@@ -27,6 +28,9 @@ public:
     std::map<std::pair<int, int>, std::shared_ptr<Key>> get_all_keys();
 
     std::map<std::pair<int, int>, std::shared_ptr<Equipment>> get_all_equipments();
+
+    std::map<std::pair<int, int>, std::shared_ptr<Weapon>> get_all_weapons();
+
 
     void be_loaded(const json& data);
 };

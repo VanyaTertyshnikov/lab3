@@ -5,6 +5,6 @@
 #include "EnchantedWeapon.h"
 
 void EnchantedWeapon::be_loaded(json data) {
-    Enchanted::be_loaded(data);
+    Enchanted::be_loaded(data["enchanted"]);
     Weapon::be_loaded(data);
 }

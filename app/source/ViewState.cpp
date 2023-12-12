@@ -38,6 +38,7 @@ void ViewState::load(const std::string &file_path) {
     this->map_view.load_potions_asset(data["potions"].get<std::string>());
     this->map_view.load_key_asset(data["key"].get<std::string>());
     this->map_view.load_equipment_asset(data["equipment"].get<std::string>());
+    this->map_view.load_weapon_asset(data["weapon"].get<std::string>());
 
     this->player_view.be_loaded(data["player"].get<std::string>());
     this->player_info_view.be_loaded(data["font"].get<std::string>());

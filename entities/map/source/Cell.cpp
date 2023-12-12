@@ -7,6 +7,10 @@
 #include "Key.h"
 #include "Equipment.h"
 #include "ArtifactEquipment.h"
+#include "Weapon.h"
+#include "ArtifactWeapon.h"
+#include "EnchantedWeapon.h"
+#include "MixedWeapon.h"
 #include <iostream>
 
 Cell::Cell(std::pair<int, int> coords) : Placeable(coords) {}
@@ -46,6 +50,26 @@ void Cell::be_loaded(json data) {
         }
         if(data["container"]["type"].get<std::string>() == "equipment-artifact") {
             this->inner_object = std::make_shared<ArtifactEquipment>();
+            this->inner_object->be_loaded(data["container"]["data"]);
+        }
+
+        if(data["container"]["type"].get<std::string>() == "weapon") {
+
+            this->inner_object = std::make_shared<Weapon>();
+            this->inner_object->be_loaded(data["container"]["data"]);
+
+        }
+
+        if(data["container"]["type"].get<std::string>() == "weapon-artifact") {
+            this->inner_object = std::make_shared<ArtifactWeapon>();
+            this->inner_object->be_loaded(data["container"]["data"]);
+        }
+        if(data["container"]["type"].get<std::string>() == "weapon-enchanted") {
+            this->inner_object = std::make_shared<EnchantedWeapon>();
+            this->inner_object->be_loaded(data["container"]["data"]);
+        }
+        if(data["container"]["type"].get<std::string>() == "weapon-mixed") {
+            this->inner_object = std::make_shared<MixedWeapon>();
             this->inner_object->be_loaded(data["container"]["data"]);
         }
     }

@@ -17,6 +17,7 @@ private:
     sf::Texture potions_texture;
     sf::Texture key_texture;
     sf::Texture equipment_texture;
+    sf::Texture weapon_texture;
 
     void draw_cells_layer(std::shared_ptr<sf::RenderWindow>& window, Map& map);
 
@@ -29,6 +30,9 @@ private:
     void draw_equipment_layer(std::shared_ptr<sf::RenderWindow>& window,
                               const std::map<std::pair<int, int>, std::shared_ptr<Equipment>>& keys);
 
+
+    void draw_weapon_layer(std::shared_ptr<sf::RenderWindow>& window,
+                              const std::map<std::pair<int, int>, std::shared_ptr<Weapon>>& keys);
 public:
     MapView() = default;
 
@@ -41,6 +45,8 @@ public:
     void load_key_asset(const std::string& file_path);
 
     void load_equipment_asset(const std::string& file_path);
+
+    void load_weapon_asset(const std::string& file_path);
 
     void be_loaded(const std::string& file_path);
 };
