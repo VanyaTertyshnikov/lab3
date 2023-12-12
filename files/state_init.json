@@ -247,6 +247,21 @@
         "placement": "hands",
         "defence": 3
       }
+    }},
+    {"x":  6, "y":  11, "type": "floor", "container":  {
+      "type": "equipment-artifact",
+      "data": {
+        "name": "Gloves",
+        "placement": "hands",
+        "defence": 3,
+        "influence": {
+          "power": 5,
+          "ability": 5,
+          "endurance": 5,
+          "health_limit": 0,
+          "health": 0
+        }
+      }
     }}
   ],
   "chests": [
