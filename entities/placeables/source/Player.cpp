@@ -22,6 +22,7 @@ json Player::be_saved() const {
     return save_object;
 }
 
+
 void Player::be_moved(std::pair<int, int> new_coords) {
     this->coords = new_coords;
 }
@@ -106,11 +107,13 @@ void Player::take_weapon(std::shared_ptr<Weapon> &&weapon) {
     std::shared_ptr<ArtifactWeapon> a_weapon = std::dynamic_pointer_cast<ArtifactWeapon>(weapon);
     if(a_weapon) {
         this->influence = this->influence + a_weapon->get_influence();
+        this->compute_secondary();
     }
 
     std::shared_ptr<MixedWeapon> m_weapon = std::dynamic_pointer_cast<MixedWeapon>(weapon);
     if(m_weapon) {
         this->influence = this->influence + m_weapon->get_influence();
+        this->compute_secondary();
     }
 }
 
@@ -119,10 +122,12 @@ std::shared_ptr<Weapon> Player::throw_weapon() {
     std::shared_ptr<ArtifactWeapon> a_weapon = std::dynamic_pointer_cast<ArtifactWeapon>(this->inv.weapon.second);
     if(a_weapon) {
         this->influence = this->influence - a_weapon->get_influence();
+        this->compute_secondary();
     }
     std::shared_ptr<MixedWeapon> m_weapon = std::dynamic_pointer_cast<MixedWeapon>(this->inv.weapon.second);
     if(m_weapon) {
         this->influence = this->influence - m_weapon->get_influence();
+        this->compute_secondary();
     }
     this->inv.weapon = {false, nullptr};
     return  result;
@@ -137,6 +142,7 @@ void Player::take_equipment(std::shared_ptr<Equipment> &&equipment) {
     std::shared_ptr<ArtifactEquipment> a_eq = std::dynamic_pointer_cast<ArtifactEquipment>(equipment);
     if(a_eq) {
         this->influence = this->influence + a_eq->get_influence();
+        this->compute_secondary();
     }
 }
 
@@ -145,6 +151,7 @@ std::shared_ptr<Equipment> Player::throw_equipment(const std::string &placement)
     std::shared_ptr<ArtifactEquipment> a_eq = std::dynamic_pointer_cast<ArtifactEquipment>(result);
     if(a_eq) {
         this->influence = this->influence - a_eq->get_influence();
+        this->compute_secondary();
     }
     this->inv.equipments[placement] = {false, nullptr};
     return result;
