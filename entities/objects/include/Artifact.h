@@ -15,8 +15,16 @@ public:
     Artifact() = default;
     virtual ~Artifact() = default;
 
+    /**
+     * @breif Getter for influence of Artifact
+     * @return Primary that means how Artifact influences on user
+     */
     [[nodiscard]] Primary get_influence() const;
 
+    /**
+     * @brief Loads data about Artifact from JSON object
+     * @param data JSON object
+     */
     void be_loaded(json data);
 };
 

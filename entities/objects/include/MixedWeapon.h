@@ -14,6 +14,10 @@ public:
     MixedWeapon() = default;
     ~MixedWeapon() override = default;
 
+    /**
+     * @brief Loads data about MixedWeapon from JSON object
+     * @param data JSON object
+     */
     void be_loaded(json data) override;
 };
 

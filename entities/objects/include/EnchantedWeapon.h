@@ -14,6 +14,10 @@ public:
     EnchantedWeapon() = default;
     ~EnchantedWeapon() override = default;
 
+    /**
+     * @brief Loads data about EnchantedWeapon from JSON object
+     * @param data JSON object
+     */
     void be_loaded(json data) override;
 };
 

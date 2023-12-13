@@ -9,6 +9,10 @@
 
 class Drinkable {
 public:
+    /**
+     * @brief Result of drinking
+     * @return Primary object which contains information about result of drinking
+     */
     virtual Primary be_drunk() = 0;
 };
 

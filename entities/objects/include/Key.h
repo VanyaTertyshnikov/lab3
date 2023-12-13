@@ -20,11 +20,23 @@ public:
     Key() = default;
     ~Key() override = default;
 
+    /**
+     * @brief Getter for amount (number of keys in bunch)
+     * @return Amount
+     */
     [[nodiscard]] int get_amount() const;
 
+    /**
+     * @brief Loads data about Key from JSON object
+     * @param data JSON object
+     */
     void be_loaded(json data) override;
 
-    json be_saved() const override;
+    /**
+     * @brief Saves data about Key into JSON object
+     * @return JSON object
+     */
+    [[nodiscard]] json be_saved() const override;
 };
 
 
