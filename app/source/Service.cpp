@@ -100,8 +100,16 @@ void Service::try_take() {
     }
     std::shared_ptr<Equipment> read_equipment = std::dynamic_pointer_cast<Equipment>(curr_floor.get_inner_object());
     if(read_equipment) {
-        this->state->get_player().take_equipment(std::move(read_equipment));
-        this->state->get_map().get_cells()[player_y][player_x].set_inner_object(nullptr);
+        auto f_eq = this->state->get_player().get_equipments().find(read_equipment->get_placement());
+        if(f_eq == this->state->get_player().get_equipments().end() || f_eq->second.second == nullptr) {
+            this->state->get_player().take_equipment(std::move(read_equipment));
+            this->state->get_map().get_cells()[player_y][player_x].set_inner_object(nullptr);
+        } else {
+            auto tmp = this->state->get_player().throw_equipment(read_equipment->get_placement());
+            this->state->get_player().take_equipment(std::move(read_equipment));
+            this->state->get_map().get_cells()[player_y][player_x].set_inner_object(tmp);
+        }
+
     }
 }
 
@@ -227,7 +235,7 @@ void Service::select(std::pair<int, int> mouse_touch) {
     }
     if(mouse_touch.second >= 496 + 24 && mouse_touch.second <= 528 + 24) {
         if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
-            auto find_record = this->state->get_player().get_equipments().find("head");
+            auto find_record = this->state->get_player().get_equipments().find("body");
             if(find_record == this->state->get_player().get_equipments().end())
                 return;
 
@@ -240,7 +248,7 @@ void Service::select(std::pair<int, int> mouse_touch) {
     }
     if(mouse_touch.second >= 528 + 24 && mouse_touch.second <= 560 + 24) {
         if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
-            auto find_record = this->state->get_player().get_equipments().find("head");
+            auto find_record = this->state->get_player().get_equipments().find("legs");
             if(find_record == this->state->get_player().get_equipments().end())
                 return;
 
@@ -253,7 +261,7 @@ void Service::select(std::pair<int, int> mouse_touch) {
     }
     if(mouse_touch.second >= 560 + 24 && mouse_touch.second <= 592 + 24) {
         if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
-            auto find_record = this->state->get_player().get_equipments().find("head");
+            auto find_record = this->state->get_player().get_equipments().find("hands");
             if(find_record == this->state->get_player().get_equipments().end())
                 return;
 
