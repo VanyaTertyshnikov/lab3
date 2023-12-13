@@ -92,11 +92,16 @@ void Service::try_take() {
         this->state->get_player().inc_key_amount(read_key->get_amount());
         this->state->get_map().get_cells()[player_y][player_x].set_inner_object(nullptr);
     }
+    std::shared_ptr<Weapon> read_weapon = std::dynamic_pointer_cast<Weapon>(curr_floor.get_inner_object());
+    if(read_weapon) {
+        auto tmp = this->state->get_player().get_weapon().second;
+        this->state->get_player().take_weapon(std::move(read_weapon));
+        this->state->get_map().get_cells()[player_y][player_x].set_inner_object(tmp);
+    }
 }
 
 
-
-bool was_selected(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions){
+bool was_potion_selected(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions){
     for(const auto& p : potions) {
         if(p.first) {
             return true;
@@ -105,7 +110,7 @@ bool was_selected(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& p
     return false;
 }
 
-unsigned get_selected_index(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions) {
+unsigned get_potion_selected_index(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions) {
     unsigned index = 0;
     for(unsigned i = 0; i < potions.size(); i++) {
         if(potions[i].first) {
@@ -123,20 +128,24 @@ void Service::try_throw() {
     if(curr_floor.get_inner_object() != nullptr)
         return;
 
-    if(!was_selected(this->state->get_player().get_potions()))
-        return;
+    if(was_potion_selected(this->state->get_player().get_potions())) {
+        unsigned index = get_potion_selected_index(this->state->get_player().get_potions());
+        this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
+                this->state->get_player().throw_potion(index));
+    }
 
-    unsigned index = get_selected_index(this->state->get_player().get_potions());
-    this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
-            this->state->get_player().throw_potion(index));
+    if(this->state->get_player().get_weapon().first) {
+        this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
+                this->state->get_player().throw_weapon());
+    }
 }
 
 
 void Service::drink() {
-    if(!was_selected(this->state->get_player().get_potions()))
+    if(!was_potion_selected(this->state->get_player().get_potions()))
         return;
 
-    unsigned index = get_selected_index(this->state->get_player().get_potions());
+    unsigned index = get_potion_selected_index(this->state->get_player().get_potions());
     std::cout << index << "\n";
     this->state->get_player().drink(index);
 }
@@ -151,12 +160,21 @@ void Service::select(std::pair<int, int> mouse_touch) {
             if(index >= potions_data.size()) index = potions_data.size() - 1;
 
             if(!potions_data.at(index).first) {
-                if(!was_selected(potions_data)) {
+                if(!was_potion_selected(potions_data)) {
                     this->state->get_player().get_potions().at(index).first = true;
                 }
             } else {
                 this->state->get_player().get_potions().at(index).first = false;
             }
+        }
+    }
+    if(mouse_touch.second >= 432 && mouse_touch.second <= 464) {
+        if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
+            if(!this->state->get_player().get_weapon().first) {
+                this->state->get_player().get_weapon().first = true;
+            } else {
+                this->state->get_player().get_weapon().first = false;
+            };
         }
     }
 }
@@ -235,8 +253,6 @@ void Service::update(Enemy& enemy) {
 void Service::hit_player(Enemy &who) {
     int player_x = this->state->get_player().get_x();
     int player_y = this->state->get_player().get_y();
-
-
 
     if(check_direction({player_x, player_y - 1}) || check_direction({player_x, player_y + 1}) ||
             check_direction({player_x - 1, player_y}) || check_direction({player_x + 1, player_y})) {

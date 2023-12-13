@@ -2,6 +2,8 @@
 // Created by vanish2 on 04.12.23.
 //
 #include "Player.h"
+#include "ArtifactWeapon.h"
+#include "MixedWeapon.h"
 
 Player::Player(std::pair<int, int> coords) : Creature(coords) {}
 
@@ -101,6 +103,15 @@ std::pair<bool, std::shared_ptr<Weapon>> &Player::get_weapon() {
 
 void Player::take_weapon(std::shared_ptr<Weapon> &&weapon) {
     this->inv.weapon.second = weapon;
+    std::shared_ptr<ArtifactWeapon> a_weapon = std::dynamic_pointer_cast<ArtifactWeapon>(weapon);
+    if(a_weapon) {
+        this->influence = this->influence + a_weapon->get_influence();
+    }
+
+    std::shared_ptr<MixedWeapon> m_weapon = std::dynamic_pointer_cast<MixedWeapon>(weapon);
+    if(m_weapon) {
+        this->influence = this->influence + m_weapon->get_influence();
+    }
 }
 
 std::shared_ptr<Weapon> Player::throw_weapon() {
