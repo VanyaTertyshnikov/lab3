@@ -13,8 +13,8 @@ class Enchanted{
 private:
     std::string target_trait_;
     std::string avoid_trait_;
-    int best_{};
-    int worst_{};
+    int best_{1};
+    int worst_{1};
 
 public:
     Enchanted() = default;

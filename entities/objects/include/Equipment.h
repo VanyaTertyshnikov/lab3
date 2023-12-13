@@ -11,7 +11,7 @@
 class Equipment : public Object {
 private:
     std::string placement_;
-    int defence_;
+    int defence_{0};
 
 public:
     Equipment() = default;

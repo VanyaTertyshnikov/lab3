@@ -4,7 +4,9 @@
 
 #include "../include/Object.h"
 
-Object::Object(const std::string &name) : name(name) {}
+Object::Object(const std::string &name) {
+    this->set_name(name);
+}
 
 std::string Object::get_name() const {
     return this->name;
@@ -15,7 +17,7 @@ void Object::set_name(const std::string &new_name) {
 }
 
 void Object::be_loaded(json data) {
-    this->name = data["name"];
+    this->name = data["name"].get<std::string>();
 }
 
 json Object::be_saved() const {
