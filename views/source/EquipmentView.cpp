@@ -8,6 +8,8 @@
 void EquipmentView::set_sprite(const sf::Texture& texture, const std::shared_ptr<Equipment>& data) {
     this->sprite.setTexture(texture);
 
+    if(data == nullptr) return;
+
     std::shared_ptr<ArtifactEquipment> artifact = std::dynamic_pointer_cast<ArtifactEquipment>(data);
     if(artifact) {
         if(data->get_placement() == "head") {

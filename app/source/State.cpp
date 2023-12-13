@@ -18,6 +18,10 @@ std::vector<Chest> &State::get_chests() {
     return this->chests;
 }
 
+std::vector<Enemy>& State::get_enemies() {
+    return this->enemies;
+}
+
 void State::load(const std::string &file_path) {
     std::ifstream file(file_path);
     if(!file.is_open())
@@ -41,9 +45,7 @@ void State::load(const std::string &file_path) {
     }
 }
 
-std::vector<Enemy>& State::get_enemies() {
-    return this->enemies;
-}
+
 
 
 

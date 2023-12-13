@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "ArtifactWeapon.h"
 #include "MixedWeapon.h"
+#include "ArtifactEquipment.h"
 
 void Player::be_loaded(json data) {
     Creature::be_loaded(data);
@@ -127,15 +128,24 @@ std::shared_ptr<Weapon> Player::throw_weapon() {
     return  result;
 }
 
-std::vector<std::pair<bool, std::shared_ptr<Equipment>>> &Player::get_equipments() {
+std::map<std::string, std::pair<bool, std::shared_ptr<Equipment>>> &Player::get_equipments() {
     return this->inv.equipments;
 }
 
 void Player::take_equipment(std::shared_ptr<Equipment> &&equipment) {
-    this->inv.equipments.emplace_back(false, equipment);
+    this->inv.equipments[equipment->get_placement()] = {false, equipment};
+    std::shared_ptr<ArtifactEquipment> a_eq = std::dynamic_pointer_cast<ArtifactEquipment>(equipment);
+    if(a_eq) {
+        this->influence = this->influence + a_eq->get_influence();
+    }
 }
 
 std::shared_ptr<Equipment> Player::throw_equipment(const std::string &placement) {
-    this->inv.equipments.pop_back();
+    auto result = this->inv.equipments[placement].second;
+    std::shared_ptr<ArtifactEquipment> a_eq = std::dynamic_pointer_cast<ArtifactEquipment>(result);
+    if(a_eq) {
+        this->influence = this->influence - a_eq->get_influence();
+    }
+    this->inv.equipments[placement] = {false, nullptr};
+    return result;
 }
-

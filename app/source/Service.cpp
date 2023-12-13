@@ -114,7 +114,25 @@ bool was_potion_selected(const std::vector<std::pair<bool, std::shared_ptr<Potio
     return false;
 }
 
-unsigned get_potion_selected_index(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions) {
+bool was_weapon_selected(const std::pair<bool, std::shared_ptr<Weapon>>& weapon) {
+    return weapon.first;
+}
+
+bool was_equipment_selected(const std::map<std::string, std::pair<bool, std::shared_ptr<Equipment>>>& equipments) {
+    for(const auto & e : equipments) {
+        if(e.second.first) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool was_something_selected(Player& player) {
+    return was_potion_selected(player.get_potions()) || was_weapon_selected(player.get_weapon()) ||
+            was_equipment_selected(player.get_equipments());
+}
+
+unsigned get_selected_potion_index(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions) {
     unsigned index = 0;
     for(unsigned i = 0; i < potions.size(); i++) {
         if(potions[i].first) {
@@ -125,6 +143,18 @@ unsigned get_potion_selected_index(const std::vector<std::pair<bool, std::shared
     return index;
 }
 
+std::string
+get_selected_equipment_placement(const std::map<std::string, std::pair<bool, std::shared_ptr<Equipment>>>& eqs) {
+    std::string res;
+    for(const auto & eq :eqs) {
+        if(eq.second.first) {
+            res = eq.first;
+            break;
+        }
+    }
+    return res;
+}
+
 void Service::try_throw() {
     auto player_x = this->state->get_player().get_x();
     auto player_y = this->state->get_player().get_y();
@@ -132,30 +162,31 @@ void Service::try_throw() {
     if(curr_floor.get_inner_object() != nullptr)
         return;
 
+    if(!was_something_selected(this->state->get_player())) return;
+
     if(was_potion_selected(this->state->get_player().get_potions())) {
-        unsigned index = get_potion_selected_index(this->state->get_player().get_potions());
+        unsigned index = get_selected_potion_index(this->state->get_player().get_potions());
         this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
                 this->state->get_player().throw_potion(index));
+        return;
     }
 
     if(this->state->get_player().get_weapon().first) {
         this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
                 this->state->get_player().throw_weapon());
+        return;
+    }
+
+    if(was_equipment_selected(this->state->get_player().get_equipments())) {
+        auto placement = get_selected_equipment_placement(this->state->get_player().get_equipments());
+        this->state->get_map().get_cells()[player_y][player_x].set_inner_object(
+                this->state->get_player().throw_equipment(placement));
+        return;
     }
 }
 
-
-void Service::drink() {
-    if(!was_potion_selected(this->state->get_player().get_potions()))
-        return;
-
-    unsigned index = get_potion_selected_index(this->state->get_player().get_potions());
-    std::cout << index << "\n";
-    this->state->get_player().drink(index);
-}
-
 void Service::select(std::pair<int, int> mouse_touch) {
-    if(mouse_touch.second >= 400 && mouse_touch.second <= 432) {
+    if(mouse_touch.second >= 400 + 24 && mouse_touch.second <= 432 + 24) {
         if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
             unsigned index = (mouse_touch.first - 1290) / 32;
             auto potions_data = this->state->get_player().get_potions();
@@ -172,7 +203,7 @@ void Service::select(std::pair<int, int> mouse_touch) {
             }
         }
     }
-    if(mouse_touch.second >= 432 && mouse_touch.second <= 464) {
+    if(mouse_touch.second >= 432 + 24 && mouse_touch.second <= 464 + 24) {
         if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
             if(!this->state->get_player().get_weapon().first) {
                 this->state->get_player().get_weapon().first = true;
@@ -181,6 +212,66 @@ void Service::select(std::pair<int, int> mouse_touch) {
             };
         }
     }
+    if(mouse_touch.second >= 464 + 24 && mouse_touch.second <= 496 + 24) {
+        if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
+            auto find_record = this->state->get_player().get_equipments().find("head");
+            if(find_record == this->state->get_player().get_equipments().end())
+                return;
+
+            if(this->state->get_player().get_equipments()["head"].first) {
+                this->state->get_player().get_equipments()["head"].first = false;
+            } else {
+                this->state->get_player().get_equipments()["head"].first = true;
+            }
+        }
+    }
+    if(mouse_touch.second >= 496 + 24 && mouse_touch.second <= 528 + 24) {
+        if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
+            auto find_record = this->state->get_player().get_equipments().find("head");
+            if(find_record == this->state->get_player().get_equipments().end())
+                return;
+
+            if(this->state->get_player().get_equipments()["body"].first) {
+                this->state->get_player().get_equipments()["body"].first = false;
+            } else {
+                this->state->get_player().get_equipments()["body"].first = true;
+            }
+        }
+    }
+    if(mouse_touch.second >= 528 + 24 && mouse_touch.second <= 560 + 24) {
+        if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
+            auto find_record = this->state->get_player().get_equipments().find("head");
+            if(find_record == this->state->get_player().get_equipments().end())
+                return;
+
+            if(this->state->get_player().get_equipments()["legs"].first) {
+                this->state->get_player().get_equipments()["legs"].first = false;
+            } else {
+                this->state->get_player().get_equipments()["legs"].first = true;
+            }
+        }
+    }
+    if(mouse_touch.second >= 560 + 24 && mouse_touch.second <= 592 + 24) {
+        if(mouse_touch.first >= 1290 && mouse_touch.first <= 1590) {
+            auto find_record = this->state->get_player().get_equipments().find("head");
+            if(find_record == this->state->get_player().get_equipments().end())
+                return;
+
+            if(this->state->get_player().get_equipments()["hands"].first) {
+                this->state->get_player().get_equipments()["hands"].first = false;
+            } else {
+                this->state->get_player().get_equipments()["hands"].first = true;
+            }
+        }
+    }
+}
+
+void Service::drink() {
+    if(!was_potion_selected(this->state->get_player().get_potions()))
+        return;
+
+    unsigned index = get_selected_potion_index(this->state->get_player().get_potions());
+    this->state->get_player().drink(index);
 }
 
 void Service::unlock(std::pair<int, int> coords) {
@@ -234,7 +325,6 @@ void Service::update_all_enemies() {
         this->update(enemy);
     }
 }
-
 
 bool Service::check_direction(std::pair<int, int> coords) {
     if(this->state->get_player().get_x() == coords.first && this->state->get_player().get_y() == coords.second)

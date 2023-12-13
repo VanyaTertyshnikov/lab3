@@ -9,6 +9,7 @@
 #include "Creature.h"
 
 #include <vector>
+#include <map>
 #include <memory>
 
 #include <utility>
@@ -19,7 +20,7 @@
 
 struct Inventory{
     std::vector<std::pair<bool, std::shared_ptr<Potion>>> potions;
-    std::vector<std::pair<bool, std::shared_ptr<Equipment>>> equipments;
+    std::map<std::string, std::pair<bool, std::shared_ptr<Equipment>>> equipments;
     std::pair<bool, std::shared_ptr<Weapon>> weapon;
 
 };
@@ -66,11 +67,11 @@ public:
 
     std::shared_ptr<Weapon> throw_weapon(); // !
 
-    std::vector<std::pair<bool, std::shared_ptr<Equipment>>>& get_equipments(); // !!
+    std::map<std::string, std::pair<bool, std::shared_ptr<Equipment>>>& get_equipments(); // !!
 
     void take_equipment(std::shared_ptr<Equipment>&& equipment); // !!
 
-    std::shared_ptr<Equipment> throw_equipment(const std::string& placement); //!!
+    std::shared_ptr<Equipment> throw_equipment(const std::string& placement); // !!
 
     void be_loaded(json data) override;
 

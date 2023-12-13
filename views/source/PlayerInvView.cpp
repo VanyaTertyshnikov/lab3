@@ -92,31 +92,48 @@ void PlayerInvView::load_weapon_asset(const std::string &file_path) {
     this->weapon_asset.loadFromFile(file_path);
 }
 
-void PlayerInvView::draw_equipment(std::shared_ptr<sf::RenderWindow> &window, Player &player) {
+constexpr float eq_position_x = 1290;
+constexpr float head_position_y = 464 + 24;
+constexpr float body_position_y = 496 + 24;
+constexpr float legs_position_y = 528 + 24;
+constexpr float arms_position_y = 560 + 24;
+
+void draw_element(std::shared_ptr<sf::RenderWindow>& window, const std::pair<bool, std::shared_ptr<Equipment>>& equipment,
+                  const sf::Texture& equipment_asset) {
     EquipmentView equipment_view;
+    equipment_view.set_sprite(equipment_asset, equipment.second);
+    sf::Sprite sprite = equipment_view.get_sprite();
+
+    sf::Vector2<float> sprite_position{eq_position_x, 0};
+    if(equipment.second->get_placement() == "head") {
+        sprite_position.y = head_position_y;
+    } else if(equipment.second->get_placement() == "body") {
+        sprite_position.y = body_position_y;
+    } else if(equipment.second->get_placement() == "legs") {
+        sprite_position.y = legs_position_y;
+    } else if(equipment.second->get_placement() == "hands") {
+        sprite_position.y = arms_position_y;
+    }
+    sprite.setPosition(sprite_position);
+
+    sf::RectangleShape layout;
+    layout.setSize({32, 32});
+    if(equipment.first) {
+        layout.setFillColor(sf::Color::Green);
+    } else {
+        layout.setFillColor(sf::Color::Black);
+    }
+    layout.setPosition(sprite_position);
+
+    window->draw(layout);
+    window->draw(sprite);
+}
+
+void PlayerInvView::draw_equipment(std::shared_ptr<sf::RenderWindow> &window, Player &player) {
     auto equipments = player.get_equipments();
-    for(unsigned i = 0; i < equipments.size(); i++) {
-        equipment_view.set_sprite(this->equipment_asset, equipments[i].second);
-        sf::Sprite equipment_sprite = equipment_view.get_sprite();
-
-        float x_position = LEFT_CORNER_X + i * 32;
-        float y_position = LEFT_CORNER_Y + 64 + 24;
-
-        sf::RectangleShape layout;
-        layout.setSize({32, 32});
-        if(equipments[i].first) {
-            layout.setFillColor(sf::Color::Green);
-        } else {
-            layout.setFillColor(sf::Color::Black);
-        }
-        layout.setPosition({x_position, y_position});
-
-        equipment_sprite.setPosition(
-                x_position,
-                y_position
-        );
-        window->draw(layout);
-        window->draw(equipment_sprite);
+    for(const auto& record : player.get_equipments()) {
+        if(record.second.second == nullptr) continue;
+        draw_element(window, record.second, this->equipment_asset);
     }
 }
 
