@@ -94,12 +94,11 @@ void Service::try_take() {
     }
     std::shared_ptr<Weapon> read_weapon = std::dynamic_pointer_cast<Weapon>(curr_floor.get_inner_object());
     if(read_weapon) {
-        auto tmp = this->state->get_player().get_weapon().second;
+        auto tmp = this->state->get_player().throw_weapon();
         this->state->get_player().take_weapon(std::move(read_weapon));
         this->state->get_map().get_cells()[player_y][player_x].set_inner_object(tmp);
     }
 }
-
 
 bool was_potion_selected(const std::vector<std::pair<bool, std::shared_ptr<Potion>>>& potions){
     for(const auto& p : potions) {

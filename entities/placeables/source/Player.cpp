@@ -1,6 +1,7 @@
 //
 // Created by vanish2 on 04.12.23.
 //
+#include <iostream>
 #include "Player.h"
 #include "ArtifactWeapon.h"
 #include "MixedWeapon.h"
@@ -116,6 +117,14 @@ void Player::take_weapon(std::shared_ptr<Weapon> &&weapon) {
 
 std::shared_ptr<Weapon> Player::throw_weapon() {
     std::shared_ptr<Weapon> result = this->inv.weapon.second;
+    std::shared_ptr<ArtifactWeapon> a_weapon = std::dynamic_pointer_cast<ArtifactWeapon>(this->inv.weapon.second);
+    if(a_weapon) {
+        this->influence = this->influence - a_weapon->get_influence();
+    }
+    std::shared_ptr<MixedWeapon> m_weapon = std::dynamic_pointer_cast<MixedWeapon>(this->inv.weapon.second);
+    if(m_weapon) {
+        this->influence = this->influence - m_weapon->get_influence();
+    }
     this->inv.weapon = {false, nullptr};
     return  result;
 }
