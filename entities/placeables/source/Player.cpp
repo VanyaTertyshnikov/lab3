@@ -6,8 +6,6 @@
 #include "ArtifactWeapon.h"
 #include "MixedWeapon.h"
 
-Player::Player(std::pair<int, int> coords) : Creature(coords) {}
-
 void Player::be_loaded(json data) {
     Creature::be_loaded(data);
     this->max_exp = data["max_exp"].get<int>();
@@ -129,4 +127,15 @@ std::shared_ptr<Weapon> Player::throw_weapon() {
     return  result;
 }
 
+std::vector<std::pair<bool, std::shared_ptr<Equipment>>> &Player::get_equipments() {
+    return this->inv.equipments;
+}
+
+void Player::take_equipment(std::shared_ptr<Equipment> &&equipment) {
+    this->inv.equipments.emplace_back(false, equipment);
+}
+
+std::shared_ptr<Equipment> Player::throw_equipment(const std::string &placement) {
+    this->inv.equipments.pop_back();
+}
 

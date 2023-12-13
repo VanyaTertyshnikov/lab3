@@ -15,10 +15,13 @@
 
 #include "Potion.h"
 #include "Weapon.h"
+#include "Equipment.h"
 
 struct Inventory{
     std::vector<std::pair<bool, std::shared_ptr<Potion>>> potions;
+    std::vector<std::pair<bool, std::shared_ptr<Equipment>>> equipments;
     std::pair<bool, std::shared_ptr<Weapon>> weapon;
+
 };
 
 class Player : public Moveable, public Creature{
@@ -33,17 +36,23 @@ public:
     Player() = default;
     ~Player() override = default;
 
-    explicit Player(std::pair<int, int> coords);
-
     [[nodiscard]] int get_max_exp() const;
 
     [[nodiscard]] int get_level() const;
 
     [[nodiscard]] int get_upgrade_points() const;
 
+    void upgrade_primary(Primary upgrade_value);
+
+    void inc_exp(int inc_value);
+
     [[nodiscard]] std::vector<std::pair<bool, std::shared_ptr<Potion>>>& get_potions();
 
-    std::pair<bool, std::shared_ptr<Weapon>>& get_weapon(); // !
+    void take_potion(std::shared_ptr<Potion>&& potion);
+
+    std::shared_ptr<Potion> throw_potion(unsigned index);
+
+    void drink(unsigned index);
 
     [[nodiscard]] int get_key_amount() const;
 
@@ -51,19 +60,17 @@ public:
 
     void reduce_key_amount();
 
-    void take_potion(std::shared_ptr<Potion>&& potion);
-
-    std::shared_ptr<Potion> throw_potion(unsigned index);
+    std::pair<bool, std::shared_ptr<Weapon>>& get_weapon(); // !
 
     void take_weapon(std::shared_ptr<Weapon>&& weapon); // !
 
     std::shared_ptr<Weapon> throw_weapon(); // !
 
-    void drink(unsigned index);
+    std::vector<std::pair<bool, std::shared_ptr<Equipment>>>& get_equipments(); // !!
 
-    void upgrade_primary(Primary upgrade_value);
+    void take_equipment(std::shared_ptr<Equipment>&& equipment); // !!
 
-    void inc_exp(int inc_value);
+    std::shared_ptr<Equipment> throw_equipment(const std::string& placement); //!!
 
     void be_loaded(json data) override;
 

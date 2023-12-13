@@ -13,12 +13,14 @@ class PlayerInvView {
 private:
     sf::Texture potions_asset;
     sf::Texture weapon_asset;
+    sf::Texture equipment_asset;
     sf::Font font;
 
     void draw_potions(std::shared_ptr<sf::RenderWindow>& window, Player& inventory);
 
     void draw_weapon(std::shared_ptr<sf::RenderWindow>& window, Player& inventory);
 
+    void draw_equipment(std::shared_ptr<sf::RenderWindow>& window, Player& inventory);
 public:
     PlayerInvView() = default;
 
@@ -27,6 +29,8 @@ public:
     void load_potions_asset(const std::string& file_path);
 
     void load_weapon_asset(const std::string& file_path);
+
+    void load_equipment_asset(const std::string& file_path);
 
     void load_font(const std::string& file_path);
 };

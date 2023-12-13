@@ -44,6 +44,7 @@ void ViewState::load(const std::string &file_path) {
     this->player_info_view.be_loaded(data["font"].get<std::string>());
     this->player_inv_view.load_potions_asset(data["potions"].get<std::string>());
     this->player_inv_view.load_weapon_asset(data["weapon"].get<std::string>());
+    this->player_inv_view.load_equipment_asset(data["equipment"].get<std::string>());
     this->player_inv_view.load_font(data["font"].get<std::string>());
 
     this->all_chests_view.be_loaded(data["chest"].get<std::string>());
