@@ -20,6 +20,9 @@ private:
 
     void draw_weapon(std::shared_ptr<sf::RenderWindow>& window, Player& inventory);
 
+    void draw_element(std::shared_ptr<sf::RenderWindow>& window,
+                      const std::pair<bool, std::shared_ptr<Equipment>>& equipment);
+
     void draw_equipment(std::shared_ptr<sf::RenderWindow>& window, Player& inventory);
 public:
     PlayerInvView() = default;

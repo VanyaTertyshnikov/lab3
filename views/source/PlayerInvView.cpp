@@ -7,7 +7,7 @@
 #include "WeaponView.h"
 #include "EquipmentView.h"
 
-constexpr int font_size =  15;
+constexpr int font_size =  14;
 
 #define LEFT_CORNER_X 1290
 #define LEFT_CORNER_Y 400
@@ -80,12 +80,20 @@ void PlayerInvView::draw_weapon(std::shared_ptr<sf::RenderWindow> &window, Playe
     }
     layout.setPosition({x_position, y_position});
 
+    sf::Text damage(
+            std::string("Damage: ") + std::to_string(player.get_weapon().second->get_damage()),
+            this->font,
+            font_size
+    );
+    damage.setPosition(x_position + 64, y_position + 9);
+
     weapon_sprite.setPosition(
             x_position,
             y_position
     );
     window->draw(layout);
     window->draw(weapon_sprite);
+    window->draw(damage);
 }
 
 void PlayerInvView::load_weapon_asset(const std::string &file_path) {
@@ -98,8 +106,8 @@ constexpr float body_position_y = 496 + 24;
 constexpr float legs_position_y = 528 + 24;
 constexpr float arms_position_y = 560 + 24;
 
-void draw_element(std::shared_ptr<sf::RenderWindow>& window, const std::pair<bool, std::shared_ptr<Equipment>>& equipment,
-                  const sf::Texture& equipment_asset) {
+void PlayerInvView::draw_element(std::shared_ptr<sf::RenderWindow>& window,
+                                 const std::pair<bool, std::shared_ptr<Equipment>>& equipment) {
     EquipmentView equipment_view;
     equipment_view.set_sprite(equipment_asset, equipment.second);
     sf::Sprite sprite = equipment_view.get_sprite();
@@ -116,6 +124,13 @@ void draw_element(std::shared_ptr<sf::RenderWindow>& window, const std::pair<boo
     }
     sprite.setPosition(sprite_position);
 
+    sf::Text defence(
+            std::string("Defence: ") + std::to_string(equipment.second->get_defence()),
+            this->font,
+            font_size
+            );
+    defence.setPosition(sprite_position.x + 64, sprite_position.y + 9);
+
     sf::RectangleShape layout;
     layout.setSize({32, 32});
     if(equipment.first) {
@@ -127,13 +142,14 @@ void draw_element(std::shared_ptr<sf::RenderWindow>& window, const std::pair<boo
 
     window->draw(layout);
     window->draw(sprite);
+    window->draw(defence);
 }
 
 void PlayerInvView::draw_equipment(std::shared_ptr<sf::RenderWindow> &window, Player &player) {
     auto equipments = player.get_equipments();
     for(const auto& record : player.get_equipments()) {
         if(record.second.second == nullptr) continue;
-        draw_element(window, record.second, this->equipment_asset);
+        draw_element(window, record.second);
     }
 }
 
