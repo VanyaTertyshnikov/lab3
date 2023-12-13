@@ -95,4 +95,18 @@ void Player::reduce_key_amount() {
         key_amount_ = 0;
 }
 
+std::pair<bool, std::shared_ptr<Weapon>> &Player::get_weapon() {
+    return this->inv.weapon;
+}
+
+void Player::take_weapon(std::shared_ptr<Weapon> &&weapon) {
+    this->inv.weapon.second = weapon;
+}
+
+std::shared_ptr<Weapon> Player::throw_weapon() {
+    std::shared_ptr<Weapon> result = this->inv.weapon.second;
+    this->inv.weapon = {false, nullptr};
+    return  result;
+}
+
 
