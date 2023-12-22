@@ -298,26 +298,31 @@ void Service::unlock(std::pair<int, int> coords) {
     }
 }
 
+
+
 void Service::update_all_enemies() {
-    /*std::vector<Enemy> after_update;
-
-    auto thread_num = std::thread::hardware_concurrency();
-    std::vector<std::thread> threads{thread_num};
-    auto num_of_enemies = this->state->get_enemies().size();
-
-    for(size_t i = 0; i < thread_num; i++) {
-        size_t start_i = i * num_of_enemies / thread_num;
-        size_t end_i = (i + 1) * num_of_enemies / thread_num;
-        auto start = std::next(this->state->get_enemies().begin(), start_i);
-        auto end = std::next(this->state->get_enemies().begin(), end_i);
-        auto res_start = std::next(after_update.begin(), start_i);
-        //threads[i] = std::thread([=](){std::cout << "!" << std::endl;});
+    for(auto enemy : this->state->get_enemies()) {
+        this->update_enemy(enemy);
     }
-
-    for(auto &th : threads) {
-        th.join();
-    }*/
 }
+
+void Service::update_enemy(Enemy &enemy) {
+    auto player = this->state->get_player();
+    std::pair<int, int> p_pos = player.get_position();
+    std::pair<int, int> e_pos = enemy.get_position();
+
+    bool player_is_near = false;
+
+    if(e_pos.first - 1 == p_pos.first && e_pos.second == p_pos.second)
+        player_is_near = true;
+    if(e_pos.first + 1 == p_pos.first && e_pos.second == p_pos.second)
+        player_is_near = true;
+    if(e_pos.first == p_pos.first && e_pos.second - 1 == p_pos.second)
+        player_is_near = true;
+    if(e_pos.first == p_pos.first && e_pos.second + 1 == p_pos.second)
+        player_is_near = true;
+}
+
 
 
 

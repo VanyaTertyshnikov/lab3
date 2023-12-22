@@ -156,3 +156,17 @@ std::shared_ptr<Equipment> Player::throw_equipment(const std::string &placement)
     this->inv.equipments[placement] = {false, nullptr};
     return result;
 }
+
+int Player::deal_damage() {
+    int damage_amount = this->secondary.bonus_damage + this->get_weapon().second->get_damage();
+    return damage_amount;
+}
+
+int Player::resist() {
+    int resist_amount = this->secondary.bonus_defence;
+    for(const auto& eq : this->inv.equipments) {
+        resist_amount += eq.second.second->get_defence();
+    }
+    return resist_amount;
+}
+

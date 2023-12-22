@@ -78,6 +78,10 @@ public:
     [[nodiscard]] json be_saved() const override;
 
     void be_moved(std::pair<int, int> new_coords) override;
+
+    int deal_damage() override;
+
+    int resist() override;
 };
 
 #endif //LAB3_PLAYER_H

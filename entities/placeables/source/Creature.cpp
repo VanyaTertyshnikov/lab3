@@ -91,4 +91,13 @@ void Creature::set_primary(Primary new_primary) {
     this->primary = new_primary;
 }
 
+void Creature::get_damage(int damage_amount) {
+    this->primary.health -= damage_amount;
+}
+
+void Creature::hit(Creature &who) {
+    auto damage_amount = this->deal_damage() - who.resist();
+    who.get_damage(damage_amount);
+}
+
 

@@ -14,6 +14,10 @@ public:
     Enemy() = default;
     ~Enemy() override = default;
 
+    int deal_damage() override;
+
+    int resist() override;
+
     void be_moved(std::pair<int, int> new_coords) override;
 };
 

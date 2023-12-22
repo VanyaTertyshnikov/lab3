@@ -36,11 +36,9 @@ public:
     void select(std::pair<int, int> mouse_touch);
 
     void update_all_enemies();
+    void update_enemy(Enemy& enemy);
 
-    //void update_all_enemies();
-    //void update(Enemy& enemy);
-    //void hit_player(Enemy& who);
-    //bool check_direction(std::pair<int, int> coords);
+    void hit(Creature& who, Creature& whom);
 
 };
 

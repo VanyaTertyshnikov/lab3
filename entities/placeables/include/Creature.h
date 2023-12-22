@@ -35,11 +35,8 @@ protected:
     Primary primary;
     Primary influence;
     Secondary secondary;
-
     int exp{};
-
     void compute_secondary();
-
 
 public:
     Creature() = default;
@@ -47,6 +44,7 @@ public:
     ~Creature() override = default;
 
     [[nodiscard]] Primary get_primary() const;
+
     void set_primary(Primary new_primary);
 
     [[nodiscard]] Primary get_influence() const;
@@ -58,6 +56,14 @@ public:
     void be_loaded(json data) override;
 
     [[nodiscard]] json be_saved() const override;
+
+    void get_damage(int damage_amount);
+
+    virtual int deal_damage() = 0;
+
+    virtual int resist() = 0;
+
+    void hit(Creature& who);
 };
 
 #endif //LAB3_CREATURE_H
