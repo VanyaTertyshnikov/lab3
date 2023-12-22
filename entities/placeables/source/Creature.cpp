@@ -2,6 +2,7 @@
 // Created by vanish2 on 04.12.23.
 //
 #include "Creature.h"
+#include <iostream>
 
 Primary Primary::operator+(const Primary &other) const {
     Primary result;
@@ -97,6 +98,8 @@ void Creature::get_damage(int damage_amount) {
 
 void Creature::hit(Creature &who) {
     auto damage_amount = this->deal_damage() - who.resist();
+    if(damage_amount < 0)
+        damage_amount = 0;
     who.get_damage(damage_amount);
 }
 

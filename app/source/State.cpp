@@ -14,7 +14,7 @@ Map &State::get_map() {
     return this->map;
 }
 
-std::vector<Chest> &State::get_chests() {
+std::vector<Chest>& State::get_chests() {
     return this->chests;
 }
 

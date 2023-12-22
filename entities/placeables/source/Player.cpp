@@ -158,7 +158,9 @@ std::shared_ptr<Equipment> Player::throw_equipment(const std::string &placement)
 }
 
 int Player::deal_damage() {
-    int damage_amount = this->secondary.bonus_damage + this->get_weapon().second->get_damage();
+    int damage_amount = this->secondary.bonus_damage;
+    if(this->inv.weapon.second != nullptr)
+            damage_amount += this->get_weapon().second->get_damage();
     return damage_amount;
 }
 

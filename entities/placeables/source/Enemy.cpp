@@ -13,5 +13,5 @@ int Enemy::deal_damage() {
 }
 
 int Enemy::resist() {
-    return this->get_secondary().bonus_damage * 5;
+    return this->get_secondary().bonus_damage;
 }

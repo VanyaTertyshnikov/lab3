@@ -47,6 +47,12 @@ void Service::take_ground(std::pair<int, int> direction) {
 
     auto enemy_index = get_enemy_index(this->state->get_enemies(), future_position);
     if(enemy_index != -1) {
+        auto& enemy = this->state->get_enemies()[enemy_index];
+        this->state->get_player().hit(enemy);
+        if(enemy.get_primary().health <= 0) {
+            this->state->get_enemies().erase(this->state->get_enemies().begin() + enemy_index,
+                                            this->state->get_enemies().begin() + enemy_index + 1);
+        }
         return;
     }
 
