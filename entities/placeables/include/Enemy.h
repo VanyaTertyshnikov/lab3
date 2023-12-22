@@ -10,6 +10,7 @@
 #include "Moveable.h"
 
 class Enemy : public Creature, public Moveable {
+
 public:
     Enemy() = default;
     ~Enemy() override = default;

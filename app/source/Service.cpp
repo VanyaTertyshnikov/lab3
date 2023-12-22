@@ -329,6 +329,10 @@ void Service::update_enemy(Enemy &enemy) {
         player_is_near = true;
     if(e_pos.first == p_pos.first && e_pos.second + 1 == p_pos.second)
         player_is_near = true;
+
+    if(player_is_near) {
+        enemy.hit(this->state->get_player());
+    }
 }
 
 

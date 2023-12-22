@@ -9,6 +9,10 @@
 constexpr int fps = 60;
 constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
 
+constexpr sf::Int64 tick_time = 100 * 1000;
+
+constexpr int enemy_rate = 5;
+
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();
     state->load("files/state_init.json");
@@ -22,10 +26,28 @@ void App::run() {
     this->controller = std::make_shared<Controller>(service, view_state);
 
     sf::Clock clock;
+    int curr_enemy_rate = 0;
     while (this->window->isOpen()) {
         clock.restart();
-        this->controller->process_input(this->window, clock);
-        this->controller->trigger_update();
+
+        sf::Event event{};
+        bool was_worked = false;
+
+        while(clock.getElapsedTime().asMicroseconds() < tick_time) {
+            if(this->window->pollEvent(event)) {
+                if(event.type == sf::Event::Closed) {
+                    this->window->close();
+                }
+                this->controller->process_input(event);
+            }
+        }
+
+        if(curr_enemy_rate == enemy_rate) {
+            this->controller->trigger_update();
+            curr_enemy_rate = 0;
+        }
+        curr_enemy_rate++;
+
         this->controller->trigger_redraw(this->window);
         std::this_thread::sleep_for(refresh_rate);
     }

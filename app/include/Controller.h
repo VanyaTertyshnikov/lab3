@@ -20,7 +20,7 @@ public:
     Controller() = default;
     Controller(const std::shared_ptr<Service>& service, const std::shared_ptr<ViewState>& view_state);
 
-    void process_input(const std::shared_ptr<sf::RenderWindow>& window, sf::Clock& clock);
+    void process_input(const sf::Event& event);
     void trigger_update();
     void trigger_redraw(std::shared_ptr<sf::RenderWindow>& window);
 };
