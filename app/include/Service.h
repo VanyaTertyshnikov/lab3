@@ -38,8 +38,6 @@ public:
     void update_all_enemies();
     void update_enemy(Enemy& enemy);
 
-    void hit(Creature& who, Creature& whom);
-
 };
 
 #endif //LAB3_SERVICE_H

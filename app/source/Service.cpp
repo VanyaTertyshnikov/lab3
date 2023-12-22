@@ -45,8 +45,10 @@ void Service::take_ground(std::pair<int, int> direction) {
         this->state->get_player().reduce_key_amount();
     }
 
-    if(get_enemy_index(this->state->get_enemies(), future_position) != -1)
+    auto enemy_index = get_enemy_index(this->state->get_enemies(), future_position);
+    if(enemy_index != -1) {
         return;
+    }
 
     if(!this->state->get_map().get_cells()[future_position.second][future_position.first]) {
         this->move_player(future_position);
