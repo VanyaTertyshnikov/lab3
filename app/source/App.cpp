@@ -25,7 +25,7 @@ void App::run() {
     while (this->window->isOpen()) {
         clock.restart();
         this->controller->process_input(this->window, clock);
-        //this->controller->trigger_update();
+        this->controller->trigger_update();
         this->controller->trigger_redraw(this->window);
         std::this_thread::sleep_for(refresh_rate);
     }

@@ -53,7 +53,6 @@ void Service::take_ground(std::pair<int, int> direction) {
     }
 }
 
-
 void Service::move_player(std::pair<int, int> future_position) {
     this->state->get_player().be_moved(future_position);
 }
@@ -299,69 +298,26 @@ void Service::unlock(std::pair<int, int> coords) {
     }
 }
 
-int get_random_int() {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 3);
-    return dist(gen);
-}
-
-std::pair<int, int> get_random_direction(const Enemy& enemy) {
-    int future_x = enemy.get_x();
-    int future_y = enemy.get_y();
-
-    switch (get_random_int()) {
-        case 0: // up
-            future_y--;
-            break;
-        case 1: // left
-            future_x--;
-            break;
-        case 2: //down
-            future_y++;
-            break;
-        case 3:
-            future_x++;
-            break;
-    }
-
-    return {future_x, future_y};
-}
-
 void Service::update_all_enemies() {
-    for(auto& enemy: this->state->get_enemies()) {
-        this->update(enemy);
+    /*std::vector<Enemy> after_update;
+
+    auto thread_num = std::thread::hardware_concurrency();
+    std::vector<std::thread> threads{thread_num};
+    auto num_of_enemies = this->state->get_enemies().size();
+
+    for(size_t i = 0; i < thread_num; i++) {
+        size_t start_i = i * num_of_enemies / thread_num;
+        size_t end_i = (i + 1) * num_of_enemies / thread_num;
+        auto start = std::next(this->state->get_enemies().begin(), start_i);
+        auto end = std::next(this->state->get_enemies().begin(), end_i);
+        auto res_start = std::next(after_update.begin(), start_i);
+        //threads[i] = std::thread([=](){std::cout << "!" << std::endl;});
     }
+
+    for(auto &th : threads) {
+        th.join();
+    }*/
 }
-
-bool Service::check_direction(std::pair<int, int> coords) {
-    if(this->state->get_player().get_x() == coords.first && this->state->get_player().get_y() == coords.second)
-        return true;
-    return false;
-}
-
-void Service::update(Enemy& enemy) {
-    std::pair<int, int> future_position = get_random_direction(enemy);
-
-    this->hit_player(enemy);
-
-    if(get_chest_index(this->state->get_chests(), future_position) != -1)
-        return;
-
-    if (!this->state->get_map().get_cells()[future_position.second][future_position.first])
-        enemy.be_moved(future_position);
-}
-
-void Service::hit_player(Enemy &who) {
-    int player_x = this->state->get_player().get_x();
-    int player_y = this->state->get_player().get_y();
-
-    if(check_direction({player_x, player_y - 1}) || check_direction({player_x, player_y + 1}) ||
-            check_direction({player_x - 1, player_y}) || check_direction({player_x + 1, player_y})) {
-        std::cout << this->state->get_player().get_primary().health << "\n";
-    }
-}
-
 
 
 

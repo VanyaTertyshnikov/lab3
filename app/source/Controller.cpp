@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <thread>
 #include "Controller.h"
 
 constexpr sf::Int64 tick_time = 5 * 20000;
@@ -78,14 +79,10 @@ void Controller::process_input(const std::shared_ptr<sf::RenderWindow>& window, 
 Controller::Controller(const std::shared_ptr<Service> &service, const std::shared_ptr<ViewState>& view_state)
 : service_(service), view_state(view_state) {}
 
-void Controller::set_service(const std::shared_ptr<Service> &service) {
-    this->service_ = service;
-}
-
 void Controller::trigger_redraw(std::shared_ptr<sf::RenderWindow> &window) {
     this->view_state->redraw(window);
 }
 
 void Controller::trigger_update() {
-    this->service_->update_all_enemies();
+    this->service_->update_all_enemies();;
 }
