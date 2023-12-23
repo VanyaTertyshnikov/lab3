@@ -13,6 +13,8 @@ class Enemy : public Creature, public Moveable {
 
 public:
     Enemy() = default;
+    Enemy(const Enemy& other);
+
     ~Enemy() override = default;
 
     int deal_damage() override;

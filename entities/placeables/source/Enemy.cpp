@@ -15,3 +15,11 @@ int Enemy::deal_damage() {
 int Enemy::resist() {
     return this->get_secondary().bonus_damage;
 }
+
+Enemy::Enemy(const Enemy &other)  : Creature(other) {
+    this->primary = other.primary;
+    this->secondary = other.secondary;
+    this->influence = other.influence;
+    this->coords = other.coords;
+    this->exp = other.exp;
+}

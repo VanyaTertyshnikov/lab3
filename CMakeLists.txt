@@ -16,4 +16,4 @@ add_executable(lab3 main.cpp)
 target_link_libraries(lab3 App placeables)
 
 add_executable(timeTest timeTest.cpp)
-target_link_libraries(lab3 App placeables)
+target_link_libraries(timeTest App placeables)
