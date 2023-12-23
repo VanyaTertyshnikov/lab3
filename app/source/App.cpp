@@ -9,7 +9,7 @@
 constexpr int fps = 60;
 constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
 
-constexpr sf::Int64 tick_time = 100 * 1000;
+constexpr auto tick_time = std::chrono::microseconds(100 * 1000);
 
 constexpr int enemy_rate = 5;
 
@@ -25,19 +25,14 @@ void App::run() {
 
     this->controller = std::make_shared<Controller>(service, view_state);
 
-    sf::Clock clock;
     int curr_enemy_rate = 0;
     while (this->window->isOpen()) {
-        clock.restart();
-
         sf::Event event{};
-        bool was_worked = false;
 
-        while(clock.getElapsedTime().asMicroseconds() < tick_time) {
-            if(this->window->pollEvent(event)) {
-                if(event.type == sf::Event::Closed) {
-                    this->window->close();
-                }
+        if(this->window->pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {
+                this->window->close();
+            } else {
                 this->controller->process_input(event);
             }
         }
@@ -49,6 +44,5 @@ void App::run() {
         curr_enemy_rate++;
 
         this->controller->trigger_redraw(this->window);
-        std::this_thread::sleep_for(refresh_rate);
     }
 }
