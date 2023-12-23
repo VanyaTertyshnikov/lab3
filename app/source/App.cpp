@@ -9,9 +9,9 @@
 constexpr int fps = 60;
 constexpr auto refresh_rate = std::chrono::microseconds(1000) / fps;
 
-constexpr auto tick_time = std::chrono::microseconds(100 * 1000);
+constexpr sf::Int64 tick_time = 100 * 1000;
 
-constexpr int enemy_rate = 5;
+constexpr int enemy_rate = 700;
 
 void App::run() {
     std::shared_ptr<State> state = std::make_shared<State>();
@@ -25,8 +25,11 @@ void App::run() {
 
     this->controller = std::make_shared<Controller>(service, view_state);
 
+    sf::Clock clock;
+
     int curr_enemy_rate = 0;
     while (this->window->isOpen()) {
+        clock.restart();
         sf::Event event{};
 
         if(this->window->pollEvent(event)) {
