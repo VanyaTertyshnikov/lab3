@@ -322,7 +322,7 @@ void Service::update_all_enemies() {
     auto thread_number = std::thread::hardware_concurrency();
     std::vector<std::thread> threads(thread_number);
     auto elements = std::distance(this->state->get_enemies().begin(), this->state->get_enemies().end());
-    auto start_time = std::chrono::high_resolution_clock::now();
+
     for (size_t k = 0; k < thread_number; ++k) {
         size_t start_k = k * elements / thread_number;
         size_t end_k = (k + 1) * elements /  thread_number;
