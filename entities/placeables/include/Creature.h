@@ -5,6 +5,7 @@
 #ifndef LAB3_CREATURE_H
 #define LAB3_CREATURE_H
 
+#include <atomic>
 #include "Placeable.h"
 
 struct Primary {
