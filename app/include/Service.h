@@ -36,9 +36,10 @@ public:
     void select(std::pair<int, int> mouse_touch);
 
     void update_all_enemies();
-    void update_thread(std::vector<Enemy>::iterator first,
-                       std::vector<Enemy>::iterator last, std::vector<Enemy>::iterator first_out);
-    void update_enemy(Enemy& enemy);
+    /*void update_thread(std::vector<Enemy>::iterator first,
+                       std::vector<Enemy>::iterator last, std::vector<Enemy>::iterator first_out);*/
+    int sum_damage(std::vector<Enemy>::iterator first, std::vector<Enemy>::iterator last);
+    int update_enemy(Enemy& enemy);
 
 };
 

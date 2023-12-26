@@ -306,40 +306,7 @@ void Service::unlock(std::pair<int, int> coords) {
     }
 }
 
-
-void Service::update_thread(std::vector<Enemy>::iterator first,
-                   std::vector<Enemy>::iterator last, std::vector<Enemy>::iterator first_out) {
-    for(;first != last; ++first) {
-        auto val = *first;
-        this->update_enemy(val);
-        *first_out = val;
-        ++first_out;
-    }
-}
-
-void Service::update_all_enemies() {
-    std::vector<Enemy> after_update(this->state->get_enemies().size());
-    auto thread_number = std::thread::hardware_concurrency();
-    std::vector<std::thread> threads(thread_number);
-    auto elements = std::distance(this->state->get_enemies().begin(), this->state->get_enemies().end());
-
-    for (size_t k = 0; k < thread_number; ++k) {
-        size_t start_k = k * elements / thread_number;
-        size_t end_k = (k + 1) * elements /  thread_number;
-        auto start = std::next(this->state->get_enemies().begin(), start_k);
-        auto end = std::next(this->state->get_enemies().begin(), end_k);
-        auto res_start = std::next(after_update.begin(), start_k);
-        threads[k] = std::thread(
-                [=](){ update_thread(start, end, res_start);}
-        );
-    }
-    for(auto& th : threads) {
-        th.join();
-    }
-    this->state->get_enemies() = after_update;
-}
-
-void Service::update_enemy(Enemy &enemy) {
+int Service::update_enemy(Enemy &enemy) {
     auto player = this->state->get_player();
     std::pair<int, int> p_pos = player.get_position();
     std::pair<int, int> e_pos = enemy.get_position();
@@ -355,9 +322,40 @@ void Service::update_enemy(Enemy &enemy) {
     if(e_pos.first == p_pos.first && e_pos.second + 1 == p_pos.second)
         player_is_near = true;
 
+    int damage = 0;
     if(player_is_near) {
-        enemy.hit(this->state->get_player());
+        damage += enemy.deal_damage();
     }
+    return damage;
+}
+
+int Service::sum_damage(std::vector<Enemy>::iterator first, std::vector<Enemy>::iterator last) {
+    int res = 0;
+    for(; first != last; ++first) {
+        res += update_enemy(*first);
+    }
+    return res;
+}
+
+void Service::update_all_enemies() {
+    auto thread_number = std::thread::hardware_concurrency();
+    auto elements = std::distance(this->state->get_enemies().begin(), this->state->get_enemies().end());
+    std::vector<int> results(thread_number);
+    std::vector<std::thread> threads(thread_number);
+    for(size_t i = 0; i < thread_number; i++) {
+        size_t start_i = i * elements / thread_number;
+        size_t end_i = (i + 1) * elements / thread_number;
+        auto start = std::next(this->state->get_enemies().begin(), start_i);
+        auto end = std::next(this->state->get_enemies().begin(), end_i);
+        threads[i] = std::thread([=, &results](){
+            results[i] = sum_damage(start, end);
+        });
+    }
+    for(auto& th : threads) {
+        th.join();
+    }
+    int all_damage = std::accumulate(results.begin(), results.end(), 0);
+    this->state->get_player().get_damage(all_damage);
 }
 
 
